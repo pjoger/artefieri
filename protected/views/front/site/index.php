@@ -9,49 +9,67 @@ $this->pageTitle=Yii::app()->name;
 		<ul class="category-list clear">
 			<?php foreach($list as $category): ?>
 			<li class="category-item">
-				<?php echo CHtml::link('<span>'. mb_convert_case($category->s_title, MB_CASE_UPPER, "UTF-8") .'</span>',
+				<?php echo CHtml::link('<span>'. $category->s_title .'</span>',
 							array(
 								"arts/index",
-								"cat"=>$category->id,
-						)); ?>
+								"cat"=>$category->id
+							),
+							array(
+								//"mousehover" => "alert('hello')",
+								"name" => "catback_".$category->id
+							)
+						);
+          /* $cover = Arts::model()->GetLastCover($category->id);
+					if ($cover){
+						echo '<div class="categories-background" style="background-image: url(\''.$cover.'\');"></div>';
+					}
+					*/
+        ?>
 			</li>
 			<?php endforeach; ?>
-		</ul> 
+		</ul>
+		<?php
+			foreach($list as $category){
+				$cover = Arts::model()->GetLastCover($category->id);
+				if ($cover){
+					echo '<div id="catback_'.$category->id.'" class="categories-background" style="background-image: url(\''.$cover.'\');"></div>';
+				}
+			}
+		?>
 	</div>
-	<div class="categories-background"></div>
+	<!-- <div class="categories-background"></div> -->
 </div>
 
 
-<?php 
+<?php
+
  Yii::app()->getClientScript()->registerScript('artImageBackground', '
+	var CurVisible;
 	var hoverInHandler = function() {
 		var $this = $(this);
-		var link = $this.find("a").attr("href");
-		var pos  = link.lastIndexOf("?cat");
-		var cat  = link.substr(pos+1);
-		$.ajax({
-		    url: "'. Yii::app()->createUrl('arts/getRandomArtImage'). '",
-			type: "POST",
-		    data: (function(){
- 		    	return cat;
-			})(),	        
-		    success: function (data, textStatus) {
-//				alert(data);
-    			$("div.categories-background").fadeTo("slow", 0.1, function(){
-    				$("div.categories-background").css("background-image","url("+data+")").css("background-repeat", "no-repeat no-repeat");
-    				$("div.categories-background").css("background-position", "top center");
-    				$("div.categories-background").css("background-size", "800px");
-    			}).fadeTo("slow",0.5);
-			}
+		var cat = $(this).attr("name");
+		if (CurVisible && CurVisible.attr("id") != cat){
+			CurVisible.hide(0);
+		}
+		CurVisible = $("#"+cat);
+		$("#"+cat).stop().fadeTo("slow", 0.3, function(){
 		});
 	};
 	var hoverOutHandler = function() {
-    };
-	$("li.category-item").hover(hoverInHandler, hoverOutHandler);
+		if (CurVisible){
+			CurVisible.stop().fadeOut({
+				duration: 100,
+				queue: false,
+			});
+		}
+	};
+	$("li.category-item a").hover(hoverInHandler, hoverOutHandler);
 ', CClientScript::POS_READY);
+
 ?>
 
-<?php 
+<?php
+/*
 	Yii::app()->getClientScript()->registerScript('contentMainHeight', "
 		$(document).ready(function () {
 		var new_height = $(window).height() - 140;
@@ -68,4 +86,5 @@ $this->pageTitle=Yii::app()->name;
 		});
 	});
 ", CClientScript::POS_READY);
+*/
 ?>

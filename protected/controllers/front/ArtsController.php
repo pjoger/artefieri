@@ -7,7 +7,7 @@ class ArtsController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2FiltersAll';
-	
+
 	/**
 	 * @return array action filters
 	 */
@@ -58,7 +58,7 @@ class ArtsController extends Controller
 			$paspartu = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'5'));
 			$steklo   = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'6'));
 			$service  = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'7'));
-			
+
 			$this->render('baguettes',array(
 				'basket' => $basket,
 				'art'	 => $basket->arts0,
@@ -75,10 +75,10 @@ class ArtsController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex($type = '', $value = '', $f = '')
+	public function actionIndex($cat = 0, $type = '', $value = '', $f = '')
 	{
 		$_filters = array();
-		
+
 		if(isset($_GET))
 		{
 			$f = isset($f) ? urldecode($f) : '';
@@ -91,9 +91,9 @@ class ArtsController extends Controller
 				Yii::app()->params['filtre'] = json_encode($_filters);
 			}
 		}
-		
+
 		$limit = 1;
-		$cat = 0;
+		//$cat = 0;
 		$criteria = new CDbCriteria();
 		if(count($_filters) > 0){
 			foreach ($_filters as $key=>$filter)
@@ -172,19 +172,19 @@ class ArtsController extends Controller
 		}
 		$criteria->join .= 'INNER JOIN `super_art_types_to_types` ON `t`.`type` = `super_art_types_to_types`.`sub`';
 		$criteria->distinct = true;
-		
+
 		if ($cat == 0){
 			$criteria->addCondition("super in (select s.id from super_art_types as s)");
 		} else {
 			$criteria->addCondition("super = ".$cat);
 		}
-		
+
 		$count = Arts::model()->count($criteria);
 		$pages = new MyPagination($count);
 		$pages->pageSize = $limit;
 		$pages->applyLimit($criteria);
 		$arts  = Arts::model()->findAll($criteria);
-		
+
 		$this->render('index', array(
 				"model" => $arts,
 				"pages" => $pages,
@@ -192,15 +192,15 @@ class ArtsController extends Controller
 		));
 
 	}
-	
+
 	public function actionSearch()
 	{
 		$this->layout = "//layouts/column2";
-	
+
 		if(isset($_GET['searchword']))
 		{
 			$message = "";
-	
+
 			if(strlen($_GET['searchword'])<3 || strlen($_GET['searchword'])>255){
 				$message = "Введите не менее 3 символов, не более 255";
 				$this->render('search', array(
@@ -208,55 +208,55 @@ class ArtsController extends Controller
 						"message"=>$message,
 				));
 			}
-	
+
 			else{
 				$criteria = new CDbCriteria();
-					
+
 				//Arts
 				$criteria->join .= 'LEFT JOIN `arts_lang` ON `t`.`id` = `arts_lang`.`art`';
-	
+
 				$criteria->addCondition('t.s_name LIKE "%'.$_GET['searchword'].'%" OR arts_lang.s_name LIKE "%'.$_GET['searchword'].'%"', 'OR');
 				$criteria->addCondition('t.text_descr_source LIKE "%'.$_GET['searchword'].'%" OR arts_lang.text_descr_source LIKE "%'.$_GET['searchword'].'%"', 'OR');
-	
+
 				//Genres
 				$genresCriteria = new CDbCriteria();
 				$genresCriteria->join .= 'INNER JOIN `arts_genres` ON `t`.`id` = `arts_genres`.`art`';
 				$genresCriteria->join .= 'LEFT JOIN `genres` ON `arts_genres`.`genre` = `genres`.`id`';
 				$genresCriteria->join .= 'LEFT JOIN `genres_lang` ON `genres`.`id` = `genres_lang`.`genre`';
-	
+
 				$genresCriteria->addCondition('(genres.s_name LIKE "%'.$_GET['searchword'].'%" OR genres_lang.s_name LIKE "%'.$_GET['searchword'].'%")', 'OR');
-	
+
 				$genresCriteria->distinct = true;
-	
+
 				if (Genres::model()->count($genresCriteria) > 0) {
 					$criteria->mergeWith($genresCriteria, false);
 				}
-	
+
 				//Persons
 				$personsCriteria = new CDbCriteria();
 				$personsCriteria->join .= 'LEFT JOIN `ownership` ON `t`.`id` = `ownership`.`art` ';
 				$personsCriteria->join .= 'LEFT JOIN `persons` ON `ownership`.`person` = `persons`.`id` ';
 				$personsCriteria->join .= 'LEFT JOIN `persons_lang` ON `persons`.`id` = `persons_lang`.`person` ';
-	
+
 				$personsCriteria->addCondition('persons.s_full_name LIKE "%'.$_GET['searchword'].'%" OR persons_lang.s_full_name LIKE "%'.$_GET['searchword'].'%"', 'OR');
-					
+
 				$personsCriteria->distinct = true;
-	
+
 				if(Persons::model()->count($personsCriteria) > 0){
 					$criteria->mergeWith($personsCriteria, false);
 				}
-	
+
 				//Conditia de selectare a tipurilor de arte
 				$criteria->addCondition('t.type < 4', 'AND');
-	
+
 				//Distinct condtition
 				$criteria->distinct = true;
-	
+
 				$count = Arts::model()->count($criteria);
-	
+
 				$criteria->limit = 120;
 				$arts  = Arts::model()->findAll($criteria);
-	
+
 				if($count>=120 || $count == 0){
 					$message = "Уточните поиск";
 					$this->render('search', array(
@@ -268,14 +268,14 @@ class ArtsController extends Controller
 					$this->render('search', array(
 							"model" => $arts,
 							"count"   => $count,
-							"keyword" => $_GET['searchword'] 
+							"keyword" => $_GET['searchword']
 					));
 				}
 			}
 		}
-	
+
 	}
-	
+
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -289,7 +289,7 @@ class ArtsController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
-	
+
 	/**
 	 * Get randon Art image
 	 */
@@ -312,7 +312,7 @@ class ArtsController extends Controller
 			$criteria->limit = '1';
 			$criteria->offset = $offset;
 			$arts   = Arts::model()->find($criteria);
-			
+
 			if($arts && $arts->cover){
 				$file_name = str_pad($arts->id,8,"0",STR_PAD_LEFT).'.'.$arts->cover;
 				$splited = str_split($file_name, 2);
@@ -322,13 +322,13 @@ class ArtsController extends Controller
 				echo $arts->_image_file;
 				//echo "<span> ID=\"{$arts->id}\" NAME=\"{$arts->_image_file}\"</span>";
 			}
-			else 
+			else
 				echo "";
-			
+
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 }

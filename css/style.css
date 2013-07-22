@@ -229,7 +229,6 @@ h3 {
 #menusearch {
 	margin-top: 10px;
 }
-
 #secondmenu ul.menu li.arrow-down {
 	padding-right: 15px;
 	background: url(../assets/arrow_down.png) no-repeat;
@@ -295,6 +294,9 @@ div#mainmenu ul.menu li.item {
 div#secondmenu ul.menu li.item {
 	margin-right: 25px;
 }
+div#secondmenu ul.menu li:last-child {
+	margin-right: 0;
+}
 
 li.menu-title ul {
 	padding: 7px;
@@ -333,6 +335,7 @@ input.searchfield {
 	background: rgba(255, 255, 255, 0.5);
 	border-radius: 2px;
 	margin: 0;
+  font-size: 12px;
 }
 
 .search-magnifier {
@@ -407,45 +410,55 @@ div#settings div.submenu ul.menu li.item {
 	transition: background 0.5s linear;
 }
 
+
 .categories{
 	position: relative;
+/*  z-index: 1; */
 }
 
+/*
 .categories-container{
 	position: relative;
-	z-index: 5;
+	z-index: 1;
 }
+*/
 
 .categories-background{
 	position: absolute;
 	top: 0;
-	left: 0;
-	width: 100%;
+	left: 130px;
+	width: 700px;
 	height: 100%;
-	z-index: 1;
+/*	z-index: 1; */
 	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);
 	opacity:.5;
+	display: none;
 }
 
 .categories ul.category-list {
 	display: block;
-	font-size: 24px;
+	font-size: 34px;
 	margin-left: auto;
 	margin-right: auto;
 	opacity: 1;
 	width: 100%;
 	text-align: center;
 	padding-top: 130px;
+	position: relative;
+	z-index: 1;
 }
 
 ul.category-list li.category-item {
 	/*height: 70px;*/
-	position: relative;
+/*	position: relative; */
 	display: inline-block;
 	text-align: center;
 	width: 30%;
 	margin-top: 40px;
+}
+li.category-item a {
+	text-transform: uppercase;
 }
 /*========================*/
 ul.category-list li.category-item:nth-child(1) {
@@ -456,7 +469,7 @@ ul.category-list li.category-item:nth-child(3) {
 }
 /*========================*/
 ul.category-list li.category-item span {
-	text-shadow: 1px 3px #c2c2c2;
+	text-shadow: 0px 7px 8px #777777;
 	letter-spacing: 3px;
 }
 
@@ -708,7 +721,7 @@ div.product-order {
 }
 
 div.cart-user-info{
-	display:table-cell; 
+	display:table-cell;
 	vertical-align:bottom;
 }
 
@@ -787,7 +800,7 @@ div.products {
 }
 
 div.products-row {
-	
+
 }
 
 div.product-item {
@@ -1024,7 +1037,7 @@ div.event-links {
 }
 
 div.event-links a {
-	
+
 }
 
 /* CONTACTS */
@@ -1282,7 +1295,7 @@ table.detail-view th {
 /***********************************************************************/
 table.order-form td{
 	vertical-align:bottom !important;
-} 
+}
 .cart-user-info form .row,.kabinet-profile form .row {
 	margin-bottom: 7px;
 	float: left;

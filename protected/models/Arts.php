@@ -42,7 +42,7 @@ class Arts extends CActiveRecord
 	public $_display_name = '';
 	public $_display_text = '';
 	public $_display_src = '';
-	
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -169,20 +169,20 @@ class Arts extends CActiveRecord
 
 	public function beforeSave()
 	{
-		
+
 		if (parent::beforeSave())
 		{
 			if ($this->isNewRecord)
 			{
 				$this->added = date("Y-m-d H:i:s");
-				$this->last_update = date("Y-m-d H:i:s"); 
+				$this->last_update = date("Y-m-d H:i:s");
 			}
-			else 
+			else
 			{
 				$this->last_update = date("Y-m-d H:i:s");
 			}
 			$this->produced = date('Y-m-d', strtotime($this->produced));
-			
+
 			$this->text_descr_html = Yii::app()->decoda->parse($this->text_descr_source);
 
 			return true;
@@ -203,11 +203,11 @@ class Arts extends CActiveRecord
 				$links = Ownership::model()->getByArtNPerson($this->id, $authorid);
 				if(!$links || count($links) == 0)
 					if($ownership->save()){
-						// ownership set	
+						// ownership set
 					}
-			}			
+			}
 		}
-		
+
 		if (isset($_POST['genres']))
 		{
 			$genres = $_POST['genres'];
@@ -225,29 +225,29 @@ class Arts extends CActiveRecord
 				}
 			}
 		}
-		
-		// clone record 
+
+		// clone record
 		if(isset($_POST['Arts_copy']) || isset($_POST['Arts_foto_copy']))
 		{
 			$artCopy = $_POST['Arts_copy'];
 			unset($_POST['Arts_copy']);
-			$artPhotoCopy = $_POST['Arts_foto_copy']; 
+			$artPhotoCopy = $_POST['Arts_foto_copy'];
 			unset($_POST['Arts_foto_copy']);
-			
+
 			// clone record as copy
 			if(isset($artCopy))
 			{
 				$modelACopy = ArtsRelations::model()->find('art1=:artid and relation=:rel', array(':artid'=>$_GET['id'], ':rel'=>'2'));
 				if(!isset($modelACopy))
-					$this->cloneArt(Arts::findByPk($_GET['id']), $_POST['Arts_price_2'], $_POST['Arts_site_price_2'], 2);				
+					$this->cloneArt(Arts::findByPk($_GET['id']), $_POST['Arts_price_2'], $_POST['Arts_site_price_2'], 2);
 			}
-	
+
 			// clone record as photo copy
 			if(isset($artPhotoCopy))
 			{
 				$modelFCopy = ArtsRelations::model()->find('art1=:artid and relation=:rel', array(':artid'=>$_GET['id'], ':rel'=>'3'));
 				if(!isset($modelFCopy))
-					$this->cloneArt(Arts::findByPk($_GET['id']), $_POST['Arts_foto_price_2'], $_POST['Arts_foto_site_price_2'], 3);	
+					$this->cloneArt(Arts::findByPk($_GET['id']), $_POST['Arts_foto_price_2'], $_POST['Arts_foto_site_price_2'], 3);
 			}
 		}
 
@@ -261,7 +261,7 @@ class Arts extends CActiveRecord
 // 		$event->eve_group = 1;
 		$event->ip = Yii::app()->cookie->getIP();
 		$event->save();
-		
+
 		if (isset($this->oldRecord)){
 			if($this->oldRecord->price != $this->price)
 			{
@@ -290,15 +290,15 @@ class Arts extends CActiveRecord
 				$event->save();
 			}
 		}
-		
+
 		parent::afterSave();
-		
+
 	}
-		
+
 	protected function afterFind()
 	{
 		$this->oldRecord=clone $this;
-		
+
 		$date = date('Y-m-d', strtotime($this->produced));
 		$this->produced = $date;
 
@@ -306,19 +306,19 @@ class Arts extends CActiveRecord
 		$thumb_name =  str_pad($this->id,8,"0",STR_PAD_LEFT).'_thumb.'.$this->cover;
 		$splited = str_split($file_name, 2);
 		$file_path = $splited[0] .'/'. $splited[1] .'/'. $splited[2] . '/';
-		
+
 		if (file_exists(Yii::app()->basePath.'/../images/covers/'.$file_path.$file_name))
-			$this->_image_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name; 
+			$this->_image_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name;
 		if (file_exists(Yii::app()->basePath.'/../images/covers/'.$file_path.$thumb_name))
 			$this->_thumb_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$thumb_name;
 		elseif (file_exists(Yii::app()->basePath.'/../images/covers/'.$file_path.$file_name))
 			$this->_thumb_file = $this->createThumbnail($file_name, $thumb_name, $file_path);
-		
+
 		$lang = Yii::app()->cookie->getLanguage();
 		$lang_id = Lang::model()->findByAttributes(array('lang_2'=>$lang))->id;
-		
+
 		$arts_lang = ArtsLang::model()->findByAttributes(array('art'=>$this->id, 'lang'=>$lang_id));
-		
+
 		if ($arts_lang){
 			$this->_display_name = $arts_lang->s_name != '' ? $arts_lang->s_name : $this->s_name;
 			$this->_display_text = $arts_lang->text_descr_html != '' ? $arts_lang->text_descr_html : $this->text_descr_html;
@@ -328,10 +328,10 @@ class Arts extends CActiveRecord
 			$this->_display_text = $this->text_descr_html;
 			$this->_display_src  = $this->text_descr_source;
 		}
-		
+
 		parent::afterFind();
 	}
-	
+
 	protected function createThumbnail($image_file, $thumb_file, $file_path)
 	{
 		Yii::import('application.extensions.image.Image');
@@ -349,7 +349,7 @@ class Arts extends CActiveRecord
 		$model->isNewRecord = true;
 		$model->type = $relType;
 		$model->price = $price1;
-		$model->site_price = $price2;	
+		$model->site_price = $price2;
 		if($model->save()){
 			$secId = $model->id;
 			$artsRelation = new ArtsRelations();
@@ -359,9 +359,9 @@ class Arts extends CActiveRecord
 			if($artsRelation->save()){
 				// saved relation
 			}
-		}		
+		}
 	}
-	
+
 	public function isExclusive(){
 		$s_art_type = SuperArtTypesToTypes::model()->with('super0')->findByAttributes(array('sub'=>$this->type));
 		if ($s_art_type !== null)
@@ -369,14 +369,14 @@ class Arts extends CActiveRecord
 		else
 			return 0;
 	}
-	
+
 	public function needBaguette(){
 		return ArtTypes::model()->findByPk($this->type)->need_baguette;
 	}
-	
+
 	public function decAmount(){
 
-		$transaction =Yii::app()->db->beginTransaction(); 
+		$transaction =Yii::app()->db->beginTransaction();
 		try
 		{
 			$this->amount -= 1;
@@ -386,7 +386,7 @@ class Arts extends CActiveRecord
 			if ($this->amount == 0){
 				$baskets = Basket::model()->findAllByAttributes(array('art'=>$this->id));
 				foreach ($baskets as $basket){
-					if ($basket->delivery == null) 
+					if ($basket->delivery == null)
 						$basket->delete();
 					else {
 						$order = DeliveryInfo::model()->findByPk($basket->delivery);
@@ -396,7 +396,7 @@ class Arts extends CActiveRecord
 					}
 				}
 			}
-			
+
 		}
 		catch(Exception $e) // an exception is raised if a query fails
 		{
@@ -404,15 +404,15 @@ class Arts extends CActiveRecord
 		}
 
 	}
-	
+
 	public function incAmount(){
 
-		$transaction =Yii::app()->db->beginTransaction(); 
+		$transaction =Yii::app()->db->beginTransaction();
 		try
 		{
 			$this->amount += 1;
 			$this->save();
-			$transaction->commit();			
+			$transaction->commit();
 		}
 		catch(Exception $e) // an exception is raised if a query fails
 		{
@@ -421,7 +421,7 @@ class Arts extends CActiveRecord
 
 	}
 
-	/**
+  /**
 	 * Suggests a list of existing values matching the specified keyword.
 	 * @param string the keyword to be matched
 	 * @param integer maximum number of names to be returned
@@ -446,5 +446,34 @@ class Arts extends CActiveRecord
 		}
 		return $suggest;
 	}
-	
+
+  public function GetLastCover($super = 0)
+  {
+			$criteria = new CDbCriteria(array(
+          'select' => 't.id, t.cover, t.cover_w, t.cover_h',
+          'join' => 'JOIN `super_art_types_to_types` ON `t`.`type` = `super_art_types_to_types`.`sub`',
+          'condition' => 'super_art_types_to_types.super = :superID',
+          'order' => 't.id DESC',
+          'limit' => '1',
+          'params' => array(':superID' => $super)
+      ));
+			//$art = Arts::model()->find($criteria);
+			$art = $this->find($criteria);
+
+			if($art && $art['cover']){
+				$file_name = str_pad($art['id'],8,"0",STR_PAD_LEFT).'.'.$art['cover'];
+				$splited = str_split($file_name, 2);
+				$file_path = $splited[0] .'/'. $splited[1] .'/'. $splited[2] . '/';
+				if (file_exists(Yii::app()->basePath.'/../images/covers/'.$file_path.$file_name)){
+					$art->_image_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name;
+					return $art->_image_file;
+        }
+				//echo "<span> ID=\"{$arts->id}\" NAME=\"{$arts->_image_file}\"</span>";
+			} else {
+//				echo CVarDumper::dump($art['cover'],3,true);
+      }
+			return "";
+  }
+
+
 }

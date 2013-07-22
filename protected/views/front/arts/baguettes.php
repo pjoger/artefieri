@@ -11,7 +11,7 @@ $this->layout = '//layouts/column1';
 
 ?>
 
-<?php 
+<?php
     Yii::app()->getClientScript()->registerScript(
 		'bindCarusel',
 		'
@@ -23,7 +23,7 @@ $this->layout = '//layouts/column1';
 		var count2 = 13;
 		var to_class  = ".baghet-items-1";
 		var to_class2 = ".baghet-paspartu-1";
-		
+
 		$(".baghet-items-1").show();
 		$(".baghet-items-1 li").hide();
 		$(".baghet-items-1 li").slice(index, index+count).css("display", "inline-block");
@@ -86,7 +86,7 @@ $this->layout = '//layouts/column1';
 			var name = $(this).attr("title");
 			var price = $(this).siblings("input[name=\"baghet_price\"]").val();
 			$("#baghet_art_site_price").val(price);
-			price = ((( parseFloat( $("#baghet_SizeWidth").val() ) + parseFloat( $("#baghet_SizeHeight").val() ) )*2)/1000 * price).toFixed(2);
+			price = ((( parseFloat( $("#baghet_SizeWidth").val() ) + parseFloat( $("#baghet_SizeHeight").val() ) )*2)/100 * price).toFixed(2);
 			$("#baghet_art_id").val($(this).siblings("input[name=\"baghet_id\"]").val());
 			$("#baghet_artName").text(name);
 			$("#baghet_art_price").val(price);
@@ -103,7 +103,7 @@ $this->layout = '//layouts/column1';
 			$("#baghet_glass_site_price").val(price);
 			$("#baghet_glass_id").val($(this).siblings("input[name=\"glass_id\"]").val());
 			$("#baghet_glassName").text(name);
-			price = ((parseFloat($("#baghet_SizeWidth").val())*parseFloat($("#baghet_SizeHeight").val()))/1000000 * price).toFixed(2);
+			price = ((parseFloat($("#baghet_SizeWidth").val())*parseFloat($("#baghet_SizeHeight").val()))/10000 * price).toFixed(2);
 			$("#baghet_glass_price").val(price);
 			$("#baghet_glassPrice").text(price);
 			$("div.baghet-glass li").removeClass("active");
@@ -118,13 +118,13 @@ $this->layout = '//layouts/column1';
 			$("#baghet_paspartu_site_price").val(price);
 			$("#baghet_paspartu_id").val($(this).siblings("input[name=\"paspartu_id\"]").val());
 			$("#baghet_paspartuName").text(name);
-			price = ((parseFloat($("#baghet_SizeWidth").val())*parseFloat($("#baghet_SizeHeight").val()))/1000000 * price).toFixed(2);
+			price = ((parseFloat($("#baghet_SizeWidth").val())*parseFloat($("#baghet_SizeHeight").val()))/10000 * price).toFixed(2);
 			$("#baghet_paspartu_price").val(price);
 			$("#baghet_paspartuPrice").text(price);
 			$("div.baghet-paspartu li").removeClass("active");
 			$(this).parent().addClass("active");
 			setTotalPrice();
-		});		
+		});
 
 		$("#baghet_SizeWidth, #baghet_SizeHeight").change(function() {
 			var ov = parseFloat($("#baghet_art_sizex").val());
@@ -137,7 +137,7 @@ $this->layout = '//layouts/column1';
 				$("#baghet_SizeHeight").val(ov);
 			var sX = parseInt($("#baghet_SizeWidth").val());
 			var sY = parseInt($("#baghet_SizeHeight").val());
-		
+
 			// baghet new price
 			var aP = parseFloat($("#baghet_art_site_price").val());
 			var new_price = (((sX + sY)*2)/100 * aP).toFixed(2);
@@ -149,35 +149,35 @@ $this->layout = '//layouts/column1';
 			new_price = ((sX * sY)/10000 * aP).toFixed(2);
 			$("#baghet_glass_price").val(new_price);
 			$("#baghet_glassPrice").text(new_price);
-		
+
 			// paspartu new price
 			aP = parseFloat($("#baghet_paspartu_site_price").val());
 			new_price = ((sX * sY)/10000 * aP).toFixed(2);
 			$("#baghet_paspartu_price").val(new_price);
 			$("#baghet_paspartuPrice").text(new_price);
-		
+
 			setTotalPrice();
 		});
-		
+
 		function setTotalPrice(){
 			var tP = (parseFloat($("#baghet_art_price").val()) + parseFloat($("#baghet_glass_price").val()) + parseFloat($("#baghet_paspartu_price").val())).toFixed(2);
 			$("#baghet_totalPrice").text(tP);
 			$("#baghet_total_price").val(tP);
 		}
-		
+
 // 		$("#submitBaghetForm").submit(function() {
 // 			if(parseFloat($("#baghet_total_price").val()) == 0){
 // 				return false;
 // 			}
 // 		});
-		
+
 	});
 ',
 		CClientScript::POS_READY
 	);
-    
+
     $c_def = Yii::app()->cookie->getCurrency();
-    
+
 ?>
 <h1 class="title"><?php echo Yii::t('content', 'Framing'); ?></h1>
 
@@ -197,12 +197,12 @@ $this->layout = '//layouts/column1';
 		<div class="baghet-items wide clear">
 			<div class="baghet-nav-left"></div>
 			<ul class="baghet-items-1">
-			<?php 
+			<?php
 				$baghet_selected = Basket::model()->with(
 					array(
 						'arts0.currencies'=>array(
-							'select'=>false, 
-							'joinType'=>'INNER JOIN', 
+							'select'=>false,
+							'joinType'=>'INNER JOIN',
 							'condition'=>'arts0.type=4',
 						)
 					))->findByAttributes(array('complement_to'=>$basket->id, 'sid'=>Yii::app()->cookie->getSID()));
@@ -210,7 +210,7 @@ $this->layout = '//layouts/column1';
 					$c = $baghet->currency;
 					if ($c_def != $c)
 						$v = $baghet->currencies->convertcurrency($c, $c_def, $baghet->site_price);
-					else 
+					else
 						$v = $baghet->site_price;
 					echo '<li class="item ';
 					echo (isset($baghet_selected) && ($baghet->id == $baghet_selected->art))?'active':'';
@@ -229,12 +229,12 @@ $this->layout = '//layouts/column1';
 				endforeach; ?>
 			</ul>
 			<ul class="baghet-items-2" style="display:none">
-			<?php 
+			<?php
 				foreach ($baguette as $baghet):
 					$c = $baghet->currency;
 					if ($c_def != $c)
 						$v = $baghet->currencies->convertcurrency($c, $c_def, $baghet->site_price);
-					else 
+					else
 						$v = $baghet->site_price;
 					echo '<li class="item"><a href="#" title="'.$baghet->s_name.'">';
 					if ($baghet->cover){
@@ -257,12 +257,12 @@ $this->layout = '//layouts/column1';
 		<h2><?php echo Yii::t('content','Protective glass'); ?></h2>
 		<div class="baghet-glass">
 			<ul class="baghet-glass-1">
-			<?php 
+			<?php
 				$glass_selected = Basket::model()->with(
 					array(
 						'arts0'=>array(
-							'select'=>false, 
-							'joinType'=>'INNER JOIN', 
+							'select'=>false,
+							'joinType'=>'INNER JOIN',
 							'condition'=>'arts0.type=6',
 						)
 					))->findByAttributes(array('complement_to'=>$basket->id, 'sid'=>Yii::app()->cookie->getSID()));
@@ -270,7 +270,7 @@ $this->layout = '//layouts/column1';
 					$c = $glass->currency;
 					if ($c_def != $c)
 						$v = $glass->currencies->convertcurrency($c, $c_def, $glass->site_price);
-					else 
+					else
 						$v = $glass->site_price;
 					echo '<li class="item ';
 					echo (isset($glass_selected) && ($glass->id == $glass_selected->art))?'active':'';
@@ -291,12 +291,12 @@ $this->layout = '//layouts/column1';
 		<div class="baghet-paspartu tiny">
 			<div class="baghet-nav-left2"></div>
 			<ul class="baghet-paspartu-1">
-			<?php 
+			<?php
 				$paspartu_selected = Basket::model()->with(
 					array(
 						'arts0'=>array(
-							'select'=>false, 
-							'joinType'=>'INNER JOIN', 
+							'select'=>false,
+							'joinType'=>'INNER JOIN',
 							'condition'=>'arts0.type=5',
 						)
 					))->findByAttributes(array('complement_to'=>$basket->id, 'sid'=>Yii::app()->cookie->getSID()));
@@ -304,7 +304,7 @@ $this->layout = '//layouts/column1';
 					$c = $paspartu->currency;
 					if ($c_def != $c)
 						$v = $paspartu->currencies->convertcurrency($c, $c_def, $paspartu->site_price);
-					else 
+					else
 						$v = $paspartu->site_price;
 					echo '<li class="item ';
 					echo (isset($paspartu_selected) && ($paspartu->id == $paspartu_selected->art))?'active':'';
@@ -320,14 +320,14 @@ $this->layout = '//layouts/column1';
 					echo '<input type="hidden" name="paspartu_size_x" value="'. $paspartu->size_x/10 .'">';
 					echo '<input type="hidden" name="paspartu_size_y" value="'. $paspartu->size_y/10 .'">';
 					echo '</li>';
-				endforeach; 
+				endforeach;
 			?>
 			</ul>
 			<div class="baghet-nav-right2"></div>
 		</div> <!-- BAGHET PASPARTU IMAGE -->
 		<div class="clear"></div>
 	</div><!-- BAGHET PASPARTU -->
-	
+
 	<div class="baghet-block clear">
 		<div class="link" style="margin-top:20px">
 			<a href="#" title=""><span><?php echo Yii::t('content','Select Paint');?></span></a>
@@ -339,12 +339,12 @@ $this->layout = '//layouts/column1';
 					<h2><?php echo Yii::t('content', 'Baguette size'); ?> *</h2>
 					<table>
 						<tr>
-							<?php 
-								if ($basket->tag1 !== null || $basket->tag1 != '') 
+							<?php
+								if ($basket->tag1 !== null || $basket->tag1 != '')
 									$size = explode(" x ", $basket->tag1);
-								else 
+								else
 									$size=array("0"=>($art->size_x)/10, "1" => ($art->size_y)/10);
-								 
+
 							?>
 							<td>
 								<input type="text"   id="baghet_SizeWidth" name="baghet[SizeWidth]" value="<?php echo $size[0];  //echo $art->size_x/10; ?>" />
@@ -374,7 +374,7 @@ $this->layout = '//layouts/column1';
 						</li>
 						<li>
 							<span><?php echo Yii::t('content', 'The cost of a baguette');?>: </span>
-							<?php 
+							<?php
 								if (isset($baghet_selected)){
 									$b_price = round(($size[0] + $size[1])*2/100*$baghet_selected->arts0->site_price,2);
 									$c = $baghet_selected->arts0->currency;
@@ -398,7 +398,7 @@ $this->layout = '//layouts/column1';
 						</li>
 						<li>
 							<span><?php echo Yii::t('content', 'The cost of a baguette');?>: </span>
-							<?php 
+							<?php
 								if (isset($glass_selected)){
 									$s_price = round(($size[0] * $size[1])/10000*$glass_selected->arts0->site_price, 2);
 									$c = $glass_selected->arts0->currency;
@@ -422,7 +422,7 @@ $this->layout = '//layouts/column1';
 						</li>
 						<li>
 							<span><?php echo Yii::t('content', 'The cost of a baguette');?>: </span>
-							<?php 
+							<?php
 								if (isset($paspartu_selected)){
 									$p_price = round(($size[0] * $size[1])/10000*$paspartu_selected->arts0->site_price,2);
 									$c = $paspartu_selected->arts0->currency;
@@ -456,7 +456,7 @@ $this->layout = '//layouts/column1';
 			</div>
 			<div class="baghet-result">
 				<div class="baghet-border">
-					<?php 
+					<?php
 						if ($art->cover){
 							echo CHtml::image($art->_image_file,
 									$art->s_name,
@@ -470,4 +470,3 @@ $this->layout = '//layouts/column1';
 		<div class="clear"></div>
 	</div><!-- BAGHET DETAILS -->
 </div><!-- baghet -->
-

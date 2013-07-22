@@ -15,7 +15,7 @@
 	<!-- <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />  -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/style.css" />
-	
+
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
@@ -37,18 +37,18 @@
 	                        <div class="searchbox">
 	                            <button class="search-magnifier" type="submit" value="Search"></button>
 	                            <input  class="searchfield" type="text" onfocus="if(this.value=='<?php echo Yii::t('general', 'Search');?> ...') this.value='';" onblur="if(this.value=='') this.value='<?php echo Yii::t('general', 'Search');?> ...';" value="<?php echo Yii::t('general', 'Search');?> ..." size="20" alt="<?php echo Yii::t('general', 'Search');?>" maxlength="255" name="searchword" autocomplete="off">
-	                        </div>	
+	                        </div>
 	                        <input type="hidden" name="task" value="search">
-	                    </form>	<!-- search form -->	
-	                </div>        
-	            </div> <!-- end search --> <?php 
+	                    </form>	<!-- search form -->
+	                </div>
+	            </div> <!-- end search --> <?php
 */ ?>
 				<div id="secondmenu">
 					<?php $this->widget('zii.widgets.CMenu',array(
 							'htmlOptions'=>array('class'=>'menu'),
 							'items'=>array(
 								array(
-										'label'=>Yii::t('menu', 'For visitors'), 
+										'label'=>Yii::t('menu', 'For visitors'),
 										'itemOptions'=>array('class'=>'item arrow-down menu-title'),
 										'linkOptions'=>array('class'=>'submenu'),
 										'encodeLabel' => false,
@@ -58,15 +58,16 @@
 												array('label'=>Yii::t('menu', 'How to buy'), 'url'=>array('/cms/view', 'id'=>4),'itemOptions'=>array('class'=>'item')),
 												array('label'=>Yii::t('menu', 'Payment \ Requisites'), 'url'=>array('/cms/view', 'id'=>5),'itemOptions'=>array('class'=>'item')),
 												array('label'=>Yii::t('menu', 'Basket'), 'url'=>array('/deliveryInfo/viewCart'),'itemOptions'=>array('class'=>'item')),
-												array('label'=>Yii::t('menu', 'Register'), 'url'=>array('/site/login'),'visible'=>Yii::app()->user->isGuest,'itemOptions'=>array('class'=>'item')),
+												array('label'=>Yii::t('menu', 'Cabinet'), 'url'=>array('/site/login'),'visible'=>Yii::app()->user->isGuest,'itemOptions'=>array('class'=>'item')),
+												array('label'=>Yii::t('menu', 'Register'), 'url'=>array('/users/view'),'visible'=>Yii::app()->user->isGuest,'itemOptions'=>array('class'=>'item')),
+												array('label'=>Yii::t('menu', 'Cabinet'), 'url'=>array('/users/view'),'visible'=>!Yii::app()->user->isGuest,'itemOptions'=>array('class'=>'item')),
 												array('label'=>Yii::t('menu', 'Logout'), 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest,'itemOptions'=>array('class'=>'item')),
-												array('label'=>Yii::t('menu', 'Cabinet'), 'url'=>array('/users/view'),'itemOptions'=>array('class'=>'item')),
 												array('label'=>Yii::t('menu', 'Send message'), 'url'=>array('/site/feedback'),'itemOptions'=>array('class'=>'item'),'itemOptions'=>array('class'=>'item')),
 												array('label'=>Yii::t('menu', 'Contacts'), 'url'=>array('/cms/view', 'id'=>6),'itemOptions'=>array('class'=>'item')),
 										)
 								),
 								array(
-									'label'=>Yii::t('menu', 'For partners'), 
+									'label'=>Yii::t('menu', 'For partners'),
 									'itemOptions'=>array('class'=>'item arrow-down menu-title'),
 									'linkOptions'=>array('class'=>'submenu'),
 									'items'=>array(
@@ -87,12 +88,15 @@
 	                    <form action="<?php echo Yii::app()->createUrl('arts/search');?>" method="get">
 	                        <div>
 	                            <button class="search-magnifier" type="submit" value="Search"></button>
-	                            <input  class="searchfield" type="text" onfocus="if(this.value=='<?php echo Yii::t('general', 'Search');?> ...') this.value='';" onblur="if(this.value=='') this.value='<?php echo Yii::t('general', 'Search');?> ...';" value="<?php echo Yii::t('general', 'Search');?> ..." size="20" alt="<?php echo Yii::t('general', 'Search');?>" maxlength="255" name="searchword" autocomplete="off">
-	                        </div>	
+<?php
+/*<!--	                            <input  class="searchfield" type="text" onfocus="if(this.value=='<?php echo Yii::t('general', 'Search');?> ...') this.value='';" onblur="if(this.value=='') this.value='<?php echo Yii::t('general', 'Search');?> ...';" value="<?php echo Yii::t('general', 'Search');?> ..." size="20" alt="<?php echo Yii::t('general', 'Search');?>" maxlength="255" name="searchword" autocomplete="off">--> */
+?>
+	                            <input  class="searchfield" type="text" placeholder="<?php echo Yii::t('general', 'Search');?>" size="20" alt="<?php echo Yii::t('general', 'Search');?>" maxlength="255" name="searchword">
+	                        </div>
 	                        <input type="hidden" name="task" value="search">
-	                    </form>	<!-- search form -->	
-	                </div>        
-					
+	                    </form>	<!-- search form -->
+	                </div>
+
             </div> <!-- end second menu -->
 	        <!--</div> --> <!-- end second menu & search block -->
 	        <div class="clear"></div>
@@ -100,7 +104,7 @@
 	        	<div id="lang-block">
 	            	<a href="#" title="" class="menu-title"><?php echo Yii::t('menu', 'Language');?></a>
 	                <div class="submenu">
-						<?php 
+						<?php
 							$this->widget('application.components.LangBox');
 						?>
 	               </div> <!-- language menu -->
@@ -140,7 +144,7 @@
 	</div><!-- footer -->
 
 </div><!-- page -->
-<?php 
+<?php
 //this checks id the controller action is not 'login' then it keeps the current url in returnUrl
 if(CController::getAction()->id!='login' && CController::getAction()->id!='remindPassword')
 {
@@ -160,7 +164,7 @@ Yii::app()->getClientScript()->registerScript("submitmenu", "
 				$(this).next('.submenu').show();
 		});
 		$('.menu-title ul').mouseleave(function(){
-			$('.menu-title ul').hide(500);	
+			$('.menu-title ul').hide(500);
 		});
 		$('.menu-title').next('.submenu').mouseleave(function(){
 			$('.menu-title').next('.submenu').hide(500);

@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+.art_actions-block {
+	text-align: right;
+}
+
+#translates-table {
+	margin: 20px 0;
+}
+
+.translateForm,.productsForm,.basketForm,.addressesForm {
+	padding: 3px 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	float: left;
+	width: 100%;
+	margin: 20px 0;
+	display: none;
+}
+
+#translates-form,#products-form,#baskets-form,#addresses-form {
+	margin-top: 20px;
+}
+
+.wysibb-text-iframe {
+	min-height: 100px;
+	min-width: 100px;
+	overflow: auto;
+}
+
+#pwd-block {
+	display: none;
+}

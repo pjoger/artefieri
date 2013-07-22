@@ -1,0 +1,123 @@
+.jScrollPaneContainer {
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	width: auto !important;
+}
+
+.jScrollPaneTrack {
+	position: absolute;
+	cursor: pointer;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 18px !important;
+	border-left: 1px solid #F6B09D;
+	border-right: 1px solid #F6B09D;
+	-moz-box-shadow: inset 0 0 20px #EDECEB;
+	-webkit-box-shadow: inset 0 0 20px #EDECEB;
+	box-shadow: inset 0 0 20px #EDECEB;
+}
+
+.jScrollPaneDrag {
+	position: absolute;
+	cursor: pointer;
+	overflow: hidden;
+	width: 100% !important;
+	-moz-box-shadow: inset 0 0 10px #F6B09D;
+	-webkit-box-shadow: inset 0 0 10px #F6B09D;
+	box-shadow: inset 0 0 10px #F6B09D;
+}
+
+.jScrollPaneDragTop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+.jScrollPaneDragBottom {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+a.jScrollArrowUp {
+	display: block;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	right: 0;
+	text-indent: -2000px;
+	overflow: hidden;
+	/*background-color: #666;*/
+	height: 15px;
+}
+
+a.jScrollArrowUp:hover {
+	/*background-color: #f60;*/
+	
+}
+
+a.jScrollArrowDown {
+	display: block;
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
+	right: 0;
+	text-indent: -2000px;
+	overflow: hidden;
+	/*background-color: #666;*/
+	height: 15px;
+}
+
+a.jScrollArrowDown:hover {
+	/*background-color: #f60;*/
+	
+}
+
+a.jScrollActiveArrowButton,a.jScrollActiveArrowButton:hover {
+	/*background-color: #f00;*/
+	
+}
+
+/* CUSTOM STYLE */
+a.jScrollArrowUp {
+	background: url(../images/s_arrow_up.png);
+}
+
+a.jScrollArrowUp:hover {
+	/*background-position: 0 0px;*/
+	
+}
+
+a.jScrollArrowDown {
+	background: url(../images/s_arrow_down.png);
+}
+
+a.jScrollArrowDown:hover {
+	/*background-position: 0 0px;*/
+	
+}
+
+a.jScrollActiveArrowButton,a.jScrollActiveArrowButton:hover {
+	background-position: 0 0px;
+}
+
+.orange-bar .jScrollPaneTrack {
+	background: #f60;
+}
+
+.orange-bar .jScrollPaneDrag {
+	background: #00f url(images/drag_grab.gif) no-repeat 50% 50%;
+}
+
+.orange-bar .scroll-pane {
+	background: #69f;
+}
+
+.holder {
+	float: left;
+	margin: 10px;
+}

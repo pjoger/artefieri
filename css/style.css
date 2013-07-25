@@ -166,7 +166,7 @@ h3 {
 
 .logo {
 	display: block;
-	background: url(../assets/logo.png) no-repeat 0 0;
+	background: url(../img/logo.png) no-repeat 0 0;
 	height: 100px;
 	width: inherit;
 	top: 0;
@@ -231,7 +231,7 @@ h3 {
 }
 #secondmenu ul.menu li.arrow-down {
 	padding-right: 15px;
-	background: url(../assets/arrow_down.png) no-repeat;
+	background: url(../img/arrow_down.png) no-repeat;
 	background-position: right center;
 }
 
@@ -345,7 +345,7 @@ input.searchfield {
 	display: block;
 	width: 22px;
 	height: 18px;
-	background: url(../assets/lupa.png) no-repeat 0 0;
+	background: url(../img/lupa.png) no-repeat 0 0;
 	cursor: pointer;
 	float: right;
 	margin-left: 5px;
@@ -580,7 +580,7 @@ div.inner-top-submenu ul.colors li.item {
 }
 
 div.inner-top-submenu ul.colors li.item:hover {
-	background: url(../assets/color_hover.png) no-repeat center center;
+	background: url(../img/color_hover.png) no-repeat center center;
 }
 
 div.inner-top-submenu ul.colors li.item img {
@@ -610,11 +610,11 @@ div.inner-top-submenu ul.sizes li.item {
 }
 
 .updown .up {
-	background: url(../assets/up.png) no-repeat center center;
+	background: url(../img/up.png) no-repeat center center;
 }
 
 .updown .down {
-	background: url(../assets/down.png) no-repeat center center;
+	background: url(../img/down.png) no-repeat center center;
 }
 
 /* INNER RIGHT CONTENT */
@@ -706,7 +706,7 @@ div.product-order {
 .order-cart {
 	color: #ec4c23;
 	padding-right: 25px;
-	background: url(../assets/cart.png) no-repeat center right;
+	background: url(../img/cart.png) no-repeat center right;
 	border: none;
 	cursor: pointer;
 	text-transform: uppercase;
@@ -810,7 +810,7 @@ div.product-item {
 }
 
 div.product-item-image:hover {
-	background: url(../assets/product_hover.png) no-repeat center center;
+	background: url(../img/product_hover.png) no-repeat center center;
 }
 
 div.product-item-image,div.product-item-details {
@@ -904,7 +904,7 @@ div.profile-block .order-field-name{
 .minus-red{
 	font-weight: 700;
 	padding-left: 15px;
-	background: url(../assets/minus-red.png) no-repeat center left;
+	background: url(../img/minus-red.png) no-repeat center left;
 }
 
 div.profile-block ul li {
@@ -1126,12 +1126,12 @@ div.baghet-block div.baghet-items,div.baghet-block div.baghet-paspartu {
 
 div.baghet-block div.baghet-items.wide ul li.item:hover,div.baghet-block div.baghet-items.wide ul li.active
 	{
-	background: url(../assets/baghet-hover.png) no-repeat 3px 8px;
+	background: url(../img/baghet-hover.png) no-repeat 3px 8px;
 }
 
 div.baghet-block div.baghet-paspartu.tiny ul li.item:hover,div.baghet-block div.baghet-paspartu.tiny ul li.active
 	{
-	background: url(../assets/baghet-hover-2.png) no-repeat 5px 6px;
+	background: url(../img/baghet-hover-2.png) no-repeat 5px 6px;
 }
 
 div.baghet-block div.baghet-items.wide ul li.item a img {
@@ -1157,25 +1157,25 @@ div.baghet-items div.baghet-nav-left,div.baghet-items div.baghet-nav-right,div.b
 
 div.baghet-items div.baghet-nav-left,div.baghet-paspartu div.baghet-nav-left2
 	{
-	background: url(../assets/baghet-nav-left.png) no-repeat 5px 12px;
+	background: url(../img/baghet-nav-left.png) no-repeat 5px 12px;
 	float: left;
 }
 
 div.baghet-items div.baghet-nav-right,div.baghet-paspartu div.baghet-nav-right2
 	{
-	background: url(../assets/baghet-nav-right.png) no-repeat 5px 12px;
+	background: url(../img/baghet-nav-right.png) no-repeat 5px 12px;
 	float: right;
 }
 
 div.baghet-items div.baghet-nav-left:hover,div.baghet-paspartu div.baghet-nav-left2:hover
 	{
-	background: url(../assets/baghet-nav-left.png) no-repeat 5px 13px;
+	background: url(../img/baghet-nav-left.png) no-repeat 5px 13px;
 	float: left;
 }
 
 div.baghet-items div.baghet-nav-right:hover,div.baghet-paspartu div.baghet-nav-right2:hover
 	{
-	background: url(../assets/baghet-nav-right.png) no-repeat 5px 13px;
+	background: url(../img/baghet-nav-right.png) no-repeat 5px 13px;
 	float: right;
 }
 
@@ -1198,7 +1198,7 @@ div.baghet-result {
 
 div.baghet-result div.baghet-border {
 	padding: 15px;
-	background: url(../assets/baghet-rama-1.png) no-repeat 0 0;
+	background: url(../img/baghet-rama-1.png) no-repeat 0 0;
 	background-size: 100% 100%;
 }
 

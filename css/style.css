@@ -813,6 +813,9 @@ div.product-item-image:hover {
 	background: url(../img/product_hover.png) no-repeat center center;
 }
 
+div.product-item-image{
+  height: 240px;
+}
 div.product-item-image,div.product-item-details {
 	padding: 10px;
 	width: 320px;

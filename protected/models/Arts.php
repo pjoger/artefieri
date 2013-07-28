@@ -303,16 +303,18 @@ class Arts extends CActiveRecord
 		$this->produced = $date;
 
 		$file_name = str_pad($this->id,8,"0",STR_PAD_LEFT).'.'.$this->cover;
-		$thumb_name =  str_pad($this->id,8,"0",STR_PAD_LEFT).'_thumb.'.$this->cover;
+		//$thumb_name =  str_pad($this->id,8,"0",STR_PAD_LEFT).'_320x240.'.$this->cover;
 		$splited = str_split($file_name, 2);
 		$file_path = $splited[0] .'/'. $splited[1] .'/'. $splited[2] . '/';
+    $file_name = '/images/covers/'.$file_path.$file_name;
 
-		if (file_exists(Yii::app()->basePath.'/../images/covers/'.$file_path.$file_name))
-			$this->_image_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name;
-		if (file_exists(Yii::app()->basePath.'/../images/covers/'.$file_path.$thumb_name))
-			$this->_thumb_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$thumb_name;
-		elseif (file_exists(Yii::app()->basePath.'/../images/covers/'.$file_path.$file_name))
-			$this->_thumb_file = $this->createThumbnail($file_name, $thumb_name, $file_path);
+		if (file_exists(Yii::app()->basePath.'/..'.$file_name)){
+			$this->_image_file = Yii::app()->baseUrl.$file_name;
+      $thumb_name = $this->createThumbnail(Yii::app()->basePath.'/..'.$file_name, 320, 240);
+      if ($thumb_name){
+        $this->_thumb_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$thumb_name;
+      }
+    }
 
 		$lang = Yii::app()->cookie->getLanguage();
 		$lang_id = Lang::model()->findByAttributes(array('lang_2'=>$lang))->id;
@@ -332,7 +334,7 @@ class Arts extends CActiveRecord
 		parent::afterFind();
 	}
 
-	protected function createThumbnail($image_file, $thumb_file, $file_path)
+	protected function createThumbnail_deprecated($image_file, $thumb_file, $file_path, $force=false)
 	{
 		Yii::import('application.extensions.image.Image');
 		$image = new Image(Yii::app()->basePath.'/../images/covers/'.$file_path.$image_file);
@@ -341,7 +343,24 @@ class Arts extends CActiveRecord
 		return Yii::app()->baseUrl.'/images/covers/'.$file_path.$thumb_file;
 	}
 
-	private function cloneArt($baseArt, $price1, $price2, $relType)
+	protected function createThumbnail($image_file, $w='', $h='', $force=false)
+	{
+    if (!$image_file || (!$w and !$h)){
+      Yii::log('[WARN] wrong params', 'warning', 'system.web.CController');
+      return null;
+    }
+    $finfo = pathinfo($image_file);
+    $rfile = $finfo['filename'].'_'.$w.'x'.$h.'.'.$finfo['extension'];
+    if ($force || !file_exists($rfile)){
+      Yii::import('application.extensions.image.Image');
+      $image = new Image($image_file);
+      $image->resize($w, $h, Image::AUTO);
+      $image->save($finfo['dirname'].'/'.$rfile);
+    }
+		return $rfile;
+	}
+
+  private function cloneArt($baseArt, $price1, $price2, $relType)
 	{
 		$model = $baseArt;
 		$masterId = $baseArt->id;
@@ -452,7 +471,8 @@ class Arts extends CActiveRecord
 			$criteria = new CDbCriteria(array(
           'select' => 't.id, t.cover, t.cover_w, t.cover_h',
           'join' => 'JOIN `super_art_types_to_types` ON `t`.`type` = `super_art_types_to_types`.`sub`',
-          'condition' => 'super_art_types_to_types.super = :superID',
+          'condition' => 'super_art_types_to_types.super = :superID'
+                        .' AND t.cover IS NOT NULL AND t.cover_w > 0',
           'order' => 't.id DESC',
           'limit' => '1',
           'params' => array(':superID' => $super)

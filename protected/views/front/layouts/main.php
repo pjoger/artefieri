@@ -27,7 +27,7 @@
 	    <div id="header-right">
 	    	<div id="kontakt">
 	        	<span><?php echo Yii::t('general', 'Phone');?>: +7 495 555 44 33<br/>
-	            <?php echo Yii::t('general', 'e-Mail');?>: mail@artefieri.com</span>
+	            <?php echo CHtml::link(Yii::t('general', 'e-Mail').': mail@artefieri.com','mail@artefieri.com'); ?></span>
 	        </div> <!-- end kontakt -->
 <?php /* ?>
 <!-- 	        <div id="menusearch"> -->
@@ -102,10 +102,10 @@
 	        <div class="clear"></div>
 	        <div id="settings">
 	        	<div id="lang-block">
-	            	<a href="#" title="" class="menu-title"><?php echo Yii::t('menu', 'Language');?></a>
+	            	<a href="#" title="" class="menu-title" style="color:#cccccc; cursor:default;"><?php echo Yii::t('menu', 'Language');?></a>
 	                <div class="submenu">
 						<?php
-							$this->widget('application.components.LangBox');
+//							$this->widget('application.components.LangBox');
 						?>
 	               </div> <!-- language menu -->
 	            </div> <!-- end language -->

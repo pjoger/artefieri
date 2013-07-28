@@ -12,26 +12,25 @@ $this->renderPartial('menu/list');//, array('cat'=>isset($cat)?$cat:0,'limit'=>i
 ?>
 	<div id="inner-block">
 
-			<?php 
+			<?php
         		if($limit == 1 && isset($model[0])){
 					echo $this->renderPartial('_artDetails',array(
 						'model'=>$model[0],
 // 						'cat'=>$cat,
 // 						'limit'=>$limit,
 					));
-				 } else { 
+				 } else {
         	?>
         	<div class="products">
         		<?php foreach ($model as $product):?>
-            	<!-- <div class="products-row"> -->
                 	<div class="product-item">
                     	<div class="product-item-image">
                         	<a href="#" title="<?php echo $product->_display_name; ?>">
-                        	<?php 
+                        	<?php
                         		echo  CHtml::link(
 										CHtml::image($product->_thumb_file,
                         					$product->_display_name,
-                        					array("class" => "clickme", "title" => $product->_display_name, 'width'=>320, 'height'=>240))
+                        					array("class" => "clickme", "title" => $product->_display_name))
 										,array('arts/view','id'=>$product->id),array("class"=>"info"));
                         	?>
                         	</a>
@@ -44,7 +43,7 @@ $this->renderPartial('menu/list');//, array('cat'=>isset($cat)?$cat:0,'limit'=>i
                             	<?php echo CHtml::link('<span>i</span>',array('arts/view','id'=>$product->id),array("class"=>"info")); ?>
                             </div><!-- product info -->
                             <div class="product-item-price floatright">
-                            	<h3 class="price"><?php 
+                            	<h3 class="price"><?php
                             		//echo $product->site_price;
                             		$c_def = Yii::app()->cookie->getCurrency();
                             		$c = $product->currency;
@@ -53,14 +52,13 @@ $this->renderPartial('menu/list');//, array('cat'=>isset($cat)?$cat:0,'limit'=>i
                             		else
                             			$v = $product->site_price;
                             		echo $v.' '.$c_def;
-                            		
+
                             		//echo Yii::app()->getModule('currencymanager')->convertcurrency($c,$product->site_price).' '.$c;
                             	?></h3>
                             </div><!-- product price -->
                         </div>
                     </div><!-- product item -->
-                                        
-                <!-- </div> --><!-- products row -->
+
                 <?php endforeach; ?>
             </div><!-- product details -->
             <?php } ?>

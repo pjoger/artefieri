@@ -1,17 +1,18 @@
 <?php
+defined('APP_CFG') || define('APP_CFG',dirname(__FILE__).'/main.php');
 
 return CMap::mergeArray(
-    require(dirname(__FILE__).'/main.php'),
+    require(APP_CFG),
     array(
         // Put back-end settings there.
 		'name'=>'Artefieri',
-		
+
 		// autoloading model and component classes
 		'import'=>array(
 		),
-		
+
 		'modules'=>array(
-				
+
 			// uncomment the following to enable the Gii tool
 			'gii'=>array(
 				'class'=>'system.gii.GiiModule',
@@ -20,13 +21,13 @@ return CMap::mergeArray(
 				'ipFilters'=>array('127.0.0.1','::1'),
 				'generatorPaths' => array(
 						'ext.awegen',
-				),			
+				),
 			),
-			
+
 		),
 
     	'components'=>array(
-		
+
 			/*'urlManager'=>array(
 				'urlFormat'=>'path',
 				//'showScriptName'=>false,
@@ -37,16 +38,16 @@ return CMap::mergeArray(
 					'backend/<_c>/<_a>'=>'<_c>/<_a>',
 				),
 			),*/
-		
+
 				'decoda' => array(
 						'class' => 'application.extensions.decoda.YiiDecoda',
 						'defaults' => true,
 						'vendorPath' => 'application.extensions.decoda.vendors.decoda',
-						
+
 // 						'addHooks' => array('Emoticon', 'Code', 'Empty'),
 						'removeHooks' => array('Censor', 'Clickable','Code'),
 // 						'disableHooks' => false,
-						
+
  						'addFilters' => array('Block', 'Code', 'Default', 'Email', 'Empty', 'Image', 'List', 'Quote', 'Text', 'Url', 'Video', 'GMap', 'Cdata'),
  						'removeFilters' => array('Text'),
   						'locale' => 'en-us',
@@ -54,8 +55,9 @@ return CMap::mergeArray(
 // 						'whitelistTags' => array('code', 'b', 'i', 'url', 'u', 'img', 'size', 'ul', 'li', 'list', '*'),
 						'convertWhitespaces' => false,
 						'disableParsing' => false,
-				),	
-    				
+				),
+
+/*
 				'image'=>array(
 					'class'=>'ImgManager',
 					'versions'=>array(
@@ -64,12 +66,13 @@ return CMap::mergeArray(
 						'large'=>array('width'=>640,'height'=>640),
 					),
 				),
-    			
+ */
+
     			'bbcodedecode' => array(
     					'class' => 'application.components.bbcodedecode',
     			),
-    			 
+
 			),
-		
+
     )
 );

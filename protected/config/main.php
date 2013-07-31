@@ -52,23 +52,17 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=<dbname>',
+			//'connectionString' => 'mysql:host=localhost;dbname=shopart',
+			'connectionString' => 'mysql:host=localhost;dbname=DB',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '******',
+			'username' => 'user',
+			'password' => '*****',
 			'charset' => 'utf8',
 			// включаем профайлер
-			//'enableProfiling'=>true,
+			'enableProfiling'=>true,
 			// показываем значения параметров
-			//'enableParamLogging' => true,
+			'enableParamLogging' => true,
 		),
-// 		'db'=>array(
-// 			'connectionString' => 'mysql:host=localhost;dbname=puslic_artefier',
-// 			'emulatePrepare' => true,
-// 			'username' => 'puslic_artefier',
-// 			'password' => 'shopart1',
-// 			'charset' => 'utf8',
-// 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
@@ -76,19 +70,19 @@ return array(
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
-				array(
+				/*array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'trace, info, error, warning, profile',
 					'filter'=>'CLogFilter',
 // 					'categories'=>'system.*',
-				),
-				array(
+				),//*/
+/*				array(
 					// направляем результаты профайлинга в ProfileLogRoute (отображается
 					// внизу страницы)
 					'class'=>'CProfileLogRoute',
 					'levels'=>'profile',
 					'enabled'=>true,
-				),
+				),//*/
 // 				array(
 // 					'class' => 'CWebLogRoute',
 // 					'categories' => 'application',
@@ -138,7 +132,7 @@ return array(
 		'image'=>array(
 				'class'=>'application.extensions.image.CImageComponent',
 				// GD or ImageMagick
-				'driver'=>'GD',
+				'driver'=>'ImageMagick',
 				// ImageMagick setup path
 				//'params'=>array('directory'=>'/opt/local/bin'),
 				'params'=>array('directory'=>'/usr/bin'),
@@ -150,7 +144,11 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'enderr@mad.scientist.com',
-    	'filtre' => '{"cat":"0", "limit":"1"}',
+   	'filtre' => '{"cat":"0", "limit":"1"}',
+    'coverSize' => array(
+      array(360,240),
+      array(600,null),
+    ),
 	),
 
 	'behaviors'=>array(

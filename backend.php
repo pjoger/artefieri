@@ -1,12 +1,12 @@
 <?php
+$rootPath = dirname(__FILE__);
+$confPath = $rootPath . '/protected/config';
+
+require $confPath.'/auto_switch_conf.php';
 
 // change the following paths if necessary
-$yii=dirname(__FILE__).'/framework/yii.php';
-$config = dirname(__FILE__).'/protected/config/back.php';
-
-// Remove the following lines when in production mode
-defined('YII_DEBUG') or define('YII_DEBUG', true);
-defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
+$yii=$rootPath.'/framework/yii.php';
+$config = $confPath.'/back.php';
 
 require_once($yii);
 Yii::createWebApplication($config)->runEnd('back');

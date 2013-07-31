@@ -1,19 +1,21 @@
 <?php
 
+defined('APP_CFG') || define('APP_CFG',dirname(__FILE__).'/main.php');
+
 return CMap::mergeArray(
-    require(dirname(__FILE__).'/main.php'),
+    require(APP_CFG),
     array(
         // Put front-end settings there
         // (for example, url rules).
 		'name'=>'Artefieri',
-    		
+
 		// autoloading model and component classes
 		'import'=>array(
 			'application.extensions.*',
 		),
 
     	'components'=>array(
-		
+
 			'urlManager'=>array(
 				'urlFormat'=>'path',
 				//'showScriptName'=>false,
@@ -23,7 +25,7 @@ return CMap::mergeArray(
 					'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 				),
 			),
-	
+
 		),
 
 	)

@@ -67,7 +67,7 @@ class ArtsController extends Controller
 		$paspartu = Arts::model()->findAllByAttributes(array('type'=>'5'));
 		$steklo   = Arts::model()->findAllByAttributes(array('type'=>'6'));
 		$service  = Arts::model()->findAllByAttributes(array('type'=>'7'));
-		
+
 		$this->render('baguettes',array(
 			'baguette'=>$baguette,
 			'paspartu'=>$paspartu,
@@ -88,26 +88,34 @@ class ArtsController extends Controller
 		$authors = Ownership::model()->getByArtId($model->id);
 		$genres  = ArtsGenres::model()->getByArtId($model->id);
 		$translates = ArtsLang::model()->getByArtId($model->id);
-				
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Arts']))
 		{
 			$model->attributes=$_POST['Arts'];
-			
+
 			$file_image = CUploadedFile::getInstance($model,'_image_file');
 			if($file_image !== null) {
-				if ( (is_object($file_image) && get_class($file_image)==='CUploadedFile') )
-					$model->_image_file = $file_image;
-				$model->cover = pathinfo($file_image, PATHINFO_EXTENSION);
-				$model->cover_w = null;
-				$model->cover_h = null;
+				if ( (is_object($file_image) && get_class($file_image)==='CUploadedFile') ){
+          if ($file_image->error == 0){
+            $model->_image_file = $file_image;
+          }
+        }
 			}
-						
-            if($model->save()) {
-				if($file_image !== null)
- 					$this->updatePhoto($model, $file_image);
+
+			if($model->save()) {
+				if($file_image !== null) {
+          $img_info = Yii::app()->artefieri->saveCoverFromPost($file_image,$model->id);
+
+          if ($img_info){
+            $model->cover = $img_info['ext'];
+            $model->cover_w = $img_info['width'];
+            $model->cover_h = $img_info['height'];
+            $model->save(); // сохраним данные обложки
+          }
+ 				}
 				$this->redirect(array('view','id'=>$model->id));
 			}
 		}
@@ -130,23 +138,23 @@ class ArtsController extends Controller
 	{
 		$model=$this->loadModel($id);
 		$model->setScenario('update');
-		
+
 		$authors = Ownership::model()->getByArtId($model->id);
 		$genres = ArtsGenres::model()->getByArtId($model->id);
 		$translates = ArtsLang::model()->getByArtId($model->id);
-		
+
 		$far = ArtsRelations::model()->find('art1=:artid and relation=:rel', array(':artid'=>$id, ':rel'=>'2'));
 		if(isset($far))
 			$modelFCopy = Arts::model()->findByPk($far->art2);
-		else 
+		else
 			$modelFCopy = null;
-		
+
 		$aar = ArtsRelations::model()->find('art1=:artid and relation=:rel', array(':artid'=>$id, ':rel'=>'3'));
 		if(isset($aar))
 			$modelACopy = Arts::model()->findByPk($aar->art2);
-		else 
+		else
 			$modelACopy = null;
-		
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -155,20 +163,27 @@ class ArtsController extends Controller
 			$model->attributes=$_POST['Arts'];
 			$file_image = CUploadedFile::getInstance($model,'_image_file');
 			if($file_image !== null) {
-				if ( (is_object($file_image) && get_class($file_image)==='CUploadedFile') )
-					$model->_image_file = $file_image;
-				$model->cover = pathinfo($file_image, PATHINFO_EXTENSION);
-				$model->cover_w = null;
-				$model->cover_h = null;
+				if ( (is_object($file_image) && get_class($file_image)==='CUploadedFile') ){
+          if ($file_image->error == 0){
+            $model->_image_file = $file_image;
+          }
+        }
 			}
 
 			if($model->save()) {
 				if($file_image !== null) {
- 					$this->updatePhoto($model, $file_image);
-				} 
+          $img_info = Yii::app()->artefieri->saveCoverFromPost($file_image,$model->id);
+
+          if ($img_info){
+            $model->cover = $img_info['ext'];
+            $model->cover_w = $img_info['width'];
+            $model->cover_h = $img_info['height'];
+            $model->save(); // сохраним данные обложки
+          }
+ 				}
 				$this->redirect(array('view','id'=>$model->id));
 			}
-			
+
 		}
 
 		$this->render('update',array(
@@ -250,9 +265,9 @@ class ArtsController extends Controller
 			Yii::app()->end();
 		}
 	}
-	
+
 	/**
-	 * Builds a Nested Tree with Genres using AJAX 
+	 * Builds a Nested Tree with Genres using AJAX
 	 * @param
 	 */
 	public function actionAjaxFillTree()
@@ -271,10 +286,10 @@ class ArtsController extends Controller
 			$artId = (int) $_GET['0'];
 		}
 		//$artId = $_GET['0'];
-		
+
 		// read the data (this could be in a model)
 		$children = $this->getData($parentId, $artId);
-		
+
 		echo str_replace(
 			'"hasChildren":"0"',
 			'"hasChildren":false',
@@ -282,7 +297,7 @@ class ArtsController extends Controller
 		);
 		exit();
 	}
-	
+
 	protected function getData($parentId, $artid){
 		$children = Yii::app()->db->createCommand(
 				"SELECT m1.id, m1.s_name AS text, m2.id IS NOT NULL AS hasChildren, m1.parent "
@@ -290,17 +305,17 @@ class ArtsController extends Controller
 				. "WHERE m1.parent <=> $parentId "
 				. "GROUP BY m1.id ORDER BY m1.sort_key ASC"
         )->queryAll();
-		
+
 		foreach ($children as $k => $child) {
 			if ($child['hasChildren'] == 1){
-				$children[$k]['children'] = $this->getData($child['id'], $artid); 
+				$children[$k]['children'] = $this->getData($child['id'], $artid);
 			}
 			$children[$k] = $this->formatData($child, $artid);
 		}
-		
+
 		return $children;
 	}
-	
+
 	/*
 	 * @return data for the tree
 	*/
@@ -312,8 +327,8 @@ class ArtsController extends Controller
 	 			return array('text'=> $item['text'],'id'=>$item['id'],'hasChildren'=>isset($item['hasChildren']));
 			} else {
 				return array('text'=>CHtml::checkBox(
-						'genres[]', 
-						(isset($link) && ($link!=null)) ? TRUE : FALSE,  
+						'genres[]',
+						(isset($link) && ($link!=null)) ? TRUE : FALSE,
 						array('id'=>'genres_'.$item['id'], 'value'=>$item['id'], 'class'=>'genre')
 						). '&nbsp;'. $item['text'],'id'=>$item['id'],'hasChildren'=>$item['hasChildren']);
 			}
@@ -324,11 +339,11 @@ class ArtsController extends Controller
 // 					return array('text'=>CHtml::checkBox('genres[]', TRUE,  array('id'=>'genres_'.$item['id'], 'value'=>$item['id'], 'class'=>'genre')). '&nbsp;'. $item['text'],'id'=>$item['id'],'hasChildren'=>$item['hasChildren']);
 // 				} else {
 // 					return array('text'=>CHtml::checkBox('genres[]', FALSE, array('id'=>'genres_'.$item['id'], 'value'=>$item['id'], 'class'=>'genre')). '&nbsp;'. $item['text'],'id'=>$item['id'],'hasChildren'=>$item['hasChildren']);
-// 				}	
+// 				}
 				return array(
 						'text'=>CHtml::checkBox(
-							'genres[]', 
-							(isset($link) && ($link!=null)) ? TRUE : FALSE,  
+							'genres[]',
+							(isset($link) && ($link!=null)) ? TRUE : FALSE,
 							array('id'=>'genres_'.$item['id'], 'value'=>$item['id'], 'class'=>'genre')
 							). '&nbsp;'. $item['text'],
 						'id'=>$item['id'],
@@ -336,10 +351,10 @@ class ArtsController extends Controller
 						);
 			} else {
 				    return array('text'=>CHtml::checkBox('genres[]', FALSE, array('id'=>'genres_'.$item['id'], 'value'=>$item['id'], 'class'=>'genre')). '&nbsp;'. $item['text'],'id'=>$item['id'],'hasChildren'=>$item['hasChildren']);
-			}	
+			}
 		}
 	}
-	
+
 	public function actionAjaxLoadTranslates()
 	{
 		// accept only AJAX request (comment this when debugging)
@@ -357,78 +372,36 @@ class ArtsController extends Controller
 			false, true
 		);
 	}
-	
 
-	public function updatePhoto($model, $myfile ) {
-		if ( is_object($myfile) ) {
-			$ext = pathinfo($myfile, PATHINFO_EXTENSION);
-			$file_name = str_pad($model->id,8,"0",STR_PAD_LEFT).'.'.$ext;
-			$thumb_name = str_pad($model->id,8,"0",STR_PAD_LEFT).'_thumb.'.$ext;
-			$splited = str_split($file_name, 2);
-			$file_path = $splited[0] .'/'. $splited[1] .'/'. $splited[2] . '/';
-			$file_path = Yii::app()->basePath.'/../images/covers/' . $file_path;
-			if (!is_dir($file_path)) {
-				mkdir($file_path,0,true);
-			}
-			if (file_exists($file_path.$file_name)) { 
-				unlink ($file_path.$file_name); 
-			}
-			$model->_image_file->saveAs($file_path.$file_name);  
-			
-			$image_info = getimagesize($file_path.$file_name);
-			$model->cover_w = $image_info[0];
-			$model->cover_h = $image_info[1];
-			$model->save();
-				
-			Yii::import('application.extensions.image.Image');
-			
-			if ($image_info[0] > 600){
-				$image = new Image($file_path.$file_name);
-				$new_file_name = str_pad($model->id,8,"0",STR_PAD_LEFT).'_full.'.$ext;
-				$image->save($file_path.$new_file_name);
-				$image->resize(600, 600, Image::WIDTH);
-				$image->save($file_path.$file_name);
-			}
-			
- 			// Now create a thumb - again the thumb size is held in System Options Table
-			$image = new Image($file_path.$file_name);
-			$image->resize(300, 300, Image::WIDTH)->quality(75)->sharpen(20);
-			$image->save($file_path.$thumb_name);
-				
-			return true;
-				
-		} else return false;
-	}
-	
 	public function actionGetArtPrice()
 	{
 		$artid = (!empty($_POST['artid'])) ? $_POST['artid']: '0';
 		echo Arts::model()->findByPk($artid)->price;
 	}
-	
+
 	public function actionGetArtSitePrice()
 	{
 		$artid = (!empty($_POST['artid'])) ? $_POST['artid']: '0';
 		echo Arts::model()->findByPk($artid)->site_price;
 	}
-	
+
 	public function actionAuthorsCache(){
 		if(isset($_POST['author_id'])){
 			$array = array();
 			$array = explode(',', Yii::app()->cookie->getAuthors());
 			array_push($array, $_POST['author_id']);
 			//$array[] = $_POST['author_id'];
-			
+
 			$toCookie = implode(',', $array);
-			
+
 			if(strlen($toCookie) == 2){
 				$toCookie = substr($toCookie, 1);
 			}
-			
+
 			Yii::app()->cookie->setAuthors($toCookie);
-			
+
 			echo json_encode(array('id'=>$_POST['author_id'], 'name'=>$_POST['author_name']));
 		}
 	}
-	
+
 }

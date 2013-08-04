@@ -38,7 +38,8 @@ class Arts extends CActiveRecord
 {
 	public $_image_file = null;
 	public $_thumb_file = NULL;
-	public $oldRecord;
+  public $_covers = array();
+  public $oldRecord;
 	public $_display_name = '';
 	public $_display_text = '';
 	public $_display_src = '';
@@ -295,24 +296,23 @@ class Arts extends CActiveRecord
 
 	}
 
-	protected function afterFind()
+  protected function afterFind()
 	{
 		$this->oldRecord=clone $this;
 
 		$date = date('Y-m-d', strtotime($this->produced));
 		$this->produced = $date;
 
-		$file_name = str_pad($this->id,8,"0",STR_PAD_LEFT).'.'.$this->cover;
-		//$thumb_name =  str_pad($this->id,8,"0",STR_PAD_LEFT).'_320x240.'.$this->cover;
-		$splited = str_split($file_name, 2);
-		$file_path = $splited[0] .'/'. $splited[1] .'/'. $splited[2] . '/';
-    $file_name = '/images/covers/'.$file_path.$file_name;
-
-		if (file_exists(Yii::app()->basePath.'/..'.$file_name)){
-			$this->_image_file = Yii::app()->baseUrl.$file_name;
-      $thumb_name = $this->createThumbnail(Yii::app()->basePath.'/..'.$file_name, 320, 240);
-      if ($thumb_name){
-        $this->_thumb_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$thumb_name;
+    if ($this->cover && $this->cover_w > 0){
+      $file_name = str_pad($this->id,8,"0",STR_PAD_LEFT);
+      //$thumb_name =  str_pad($this->id,8,"0",STR_PAD_LEFT).'_320x240.'.$this->cover;
+      $splited = str_split($file_name, 2);
+      $file_path = $splited[0] .'/'. $splited[1] .'/'. $splited[2] . '/';
+			$this->_image_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name.'.jpg';
+      $this->_thumb_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name.'_320x240.jpg';
+      foreach (Yii::app()->artefieri->coverSizes as $s){
+        list($w,$h) = $s;
+        $this->_covers[$w.'x'.$h] = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name.'_'.$w.'x'.$h.'.jpg';
       }
     }
 
@@ -352,8 +352,9 @@ class Arts extends CActiveRecord
     $finfo = pathinfo($image_file);
     $rfile = $finfo['filename'].'_'.$w.'x'.$h.'.'.$finfo['extension'];
     if ($force || !file_exists($rfile)){
-      Yii::import('application.extensions.image.Image');
-      $image = new Image($image_file);
+      //Yii::import('application.extensions.image.Image');
+      //$image = new Image($image_file);
+      $image = Yii::app()->image->load($image_file);
       $image->resize($w, $h, Image::AUTO);
       $image->save($finfo['dirname'].'/'.$rfile);
     }
@@ -472,7 +473,7 @@ class Arts extends CActiveRecord
           'select' => 't.id, t.cover, t.cover_w, t.cover_h',
           'join' => 'JOIN `super_art_types_to_types` ON `t`.`type` = `super_art_types_to_types`.`sub`',
           'condition' => 'super_art_types_to_types.super = :superID'
-                        .' AND t.cover IS NOT NULL AND t.cover_w > 0',
+                        .' AND t.cover IS NOT NULL AND t.cover_w > 0 AND t.options & 1',
           'order' => 't.id DESC',
           'limit' => '1',
           'params' => array(':superID' => $super)
@@ -481,13 +482,8 @@ class Arts extends CActiveRecord
 			$art = $this->find($criteria);
 
 			if($art && $art['cover']){
-				$file_name = str_pad($art['id'],8,"0",STR_PAD_LEFT).'.'.$art['cover'];
-				$splited = str_split($file_name, 2);
-				$file_path = $splited[0] .'/'. $splited[1] .'/'. $splited[2] . '/';
-				if (file_exists(Yii::app()->basePath.'/../images/covers/'.$file_path.$file_name)){
-					$art->_image_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name;
-					return $art->_image_file;
-        }
+        return $art->_covers['600x'];
+        //echo CVarDumper::dump($art->_covers);
 				//echo "<span> ID=\"{$arts->id}\" NAME=\"{$arts->_image_file}\"</span>";
 			} else {
 //				echo CVarDumper::dump($art['cover'],3,true);

@@ -54,10 +54,10 @@ class ArtsController extends Controller
 		$basket   = Basket::model()->with('arts0')->findByAttributes(array('sid'=>Yii::app()->cookie->getSID(),'art'=>$artId));
 
 		if($basket){
-			$baguette = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'4'));
-			$paspartu = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'5'));
-			$steklo   = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'6'));
-			$service  = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'7'));
+			$baguette = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'4'),'options & 1');
+			$paspartu = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'5'),'options & 1');
+			$steklo   = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'6'),'options & 1');
+			$service  = Arts::model()->with('currencies')->findAllByAttributes(array('type'=>'7'),'options & 1');
 
 			$this->render('baguettes',array(
 				'basket' => $basket,

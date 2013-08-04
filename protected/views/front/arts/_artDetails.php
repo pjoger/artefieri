@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $fdomain = $_SERVER['HTTP_HOST'];
 $p = strrpos($fdomain, '.');
@@ -50,9 +50,9 @@ Yii::app()->clientScript->registerMetaTag($metaKeyword, 'keywords');
 	<!-- <h1><?php echo $model->_display_name; ?></h1> -->
         	<div class="product-details">
             	<div class="product-image">
-                	<a href="#"><?php 
+                	<a href="#"><?php
                 				if($model->cover){
-	                        		echo CHtml::image($model->_image_file,
+	                        		echo CHtml::image($model->_covers['600x'],
 	                        			$model->s_name,
 	                        			array("class" => "clickme", "title" => $model->s_name));
                 				}
@@ -64,11 +64,11 @@ Yii::app()->clientScript->registerMetaTag($metaKeyword, 'keywords');
                         	<li><span class="detail-title"><?php echo Yii::t('content', 'Title'); ?>: </span><span class="detail-data">«<?php echo $model->_display_name; ?>»</span></li>
                         	<li><span class="detail-title"><?php echo Yii::t('content', 'Author'); ?>: </span>
 							<?php
-								if (is_array($model->persons0)){ 
-									foreach ($model->persons0 as $key=>$author): 
+								if (is_array($model->persons0)){
+									foreach ($model->persons0 as $key=>$author):
 										echo ($key > 0)?',':'';
 										echo '<span class="detail-data">'. $author->_display_full_name .'</span>';
-									endforeach; 
+									endforeach;
 								} else {
 									echo '<span class="detail-data">'. $model->persons0->_display_full_name .'</span>';
 								}
@@ -79,20 +79,20 @@ Yii::app()->clientScript->registerMetaTag($metaKeyword, 'keywords');
                         	<li>
                         		<span class="detail-title"><?php echo Yii::t('content', 'Price'); ?>: </span>
                         		<span class="detail-data">
-                        		<?php 
+                        		<?php
                         			//echo $model->site_price;
                         			$c_def = Yii::app()->cookie->getCurrency();
 									$c = $model->currency;
 									if ($c_def != $c)
 										$v = $model->currencies->convertcurrency($c, $c_def, $model->site_price);
-									else 
+									else
 										$v = $model->site_price;
-                        			echo $v.' '.$c_def; 
+                        			echo $v.' '.$c_def;
                         		?>
                         		</span>
                         	</li>
                         	<li><span class="detail-title"><?php echo Yii::t('content', 'Genre'); ?>: </span>
-                        	<?php 
+                        	<?php
 								$s = '';
 								foreach ($model->genres0 as $key=>$genre)
 								{
@@ -106,7 +106,7 @@ Yii::app()->clientScript->registerMetaTag($metaKeyword, 'keywords');
                         	?>
                         	</li>
                         	<li><span class="detail-title"><?php echo Yii::t('content', 'Theme'); ?>: </span>
-                        	<?php 
+                        	<?php
 								$s = '';
 								foreach ($model->genres0 as $key=>$genre)
 								{

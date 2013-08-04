@@ -458,7 +458,7 @@ $this->layout = '//layouts/column1';
 				<div class="baghet-border">
 					<?php
 						if ($art->cover){
-							echo CHtml::image($art->_image_file,
+							echo CHtml::image($art->_covers['600x'],
 									$art->s_name,
 									array("title" => $art->s_name, "class" => "baghet-image"));
 						}

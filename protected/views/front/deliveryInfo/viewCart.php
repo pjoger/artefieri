@@ -11,7 +11,7 @@ $c_def = Yii::app()->cookie->getCurrency();
 
 ?>
 
-<?php if(count($baskets) == 0):?> 
+<?php if(count($baskets) == 0):?>
 <h1 class="title order-cart float-left" ><?php echo Yii::t('content','The cart is empty, please make come orders before');?></h1>
 <div class="clear"></div>
 <?php else: ?>
@@ -21,20 +21,20 @@ $c_def = Yii::app()->cookie->getCurrency();
 	<tr>
 		<td style="width:50%">
 			<div class="cart-block">
-			<?php 
+			<?php
 				$product_price = 0;
 				$service_price = 0;
 				$total_price = 0;
 				$discount = 0;
 				$nalog = 0;
-				
+
 				$basket_baghet = false;
 				$basket_glass = false;
 				$basket_paspartu = false;
-				
+
 				foreach ($baskets as $basket):
-				
-					if ($basket->complement_to !== null){	
+
+					if ($basket->complement_to !== null){
 						switch($basket->arts0->types->id){
 							case 4: $basket_baghet = true; break;
 							case 6: $basket_glass = true; break;
@@ -43,21 +43,21 @@ $c_def = Yii::app()->cookie->getCurrency();
 					} else {
 						$artId = $basket->art;
 					}
-					
+
 			?>
 				<div class="profile-block">
-					<?php 
-						$hasimage = $basket->arts0->_thumb_file !== null;
+					<?php
+						$hasimage = isset($basket->arts0->_covers['x90']);
 						if($hasimage){ ?>
 							<div class="order-item-image">
-								<img class="item-tumb" src="<?php echo $basket->arts0->_thumb_file; ?>"/>
+								<img class="item-tumb" src="<?php echo $basket->arts0->_covers['x90']; ?>"/>
 							</div>
 					<?php }	?>
 					<ul class="order-info" <?php if($hasimage) echo 'style="width: 70%;"'; ?>>
 						<li>
 							<span class="order-field-title"><?php echo $basket->arts0->types->s_name; ?></span>
 							<span class="selectFor">
-							<?php 
+							<?php
 								if ($basket->complement_to == null){
 									echo CHtml::link(Yii::t('content','Select'),array('arts/index'), array('class'=>'colorRed '));
 								} else {
@@ -84,13 +84,13 @@ $c_def = Yii::app()->cookie->getCurrency();
 						<li>
 							<span class="order-field-name"><?php echo Yii::t('content','Size');?>:</span>
 							<span class="order-field-value colorRed">
-							<?php 
+							<?php
 								if ($basket->complement_to !== null)
 								{
 									$r = Basket::model()->with('arts0')->findByAttributes(array('id'=>$basket->complement_to));
 									echo $basket->tag1 . ' cm';// $r->arts0->size_x.'x'.$r->arts0->size_y;
-								} else 
-									echo $basket->arts0->size_x/10 . ' x ' . $basket->arts0->size_y/10 . ' cm'; 
+								} else
+									echo $basket->arts0->size_x/10 . ' x ' . $basket->arts0->size_y/10 . ' cm';
 							?>
 							</span>
 						</li>
@@ -107,13 +107,13 @@ $c_def = Yii::app()->cookie->getCurrency();
 									if($basket->arts0->type == 4){
 										$price = round((($size[0] + $size[1])*2)/100 * $basket->site_price, 2);
 										if ($c_def != $c)
-											$price = $basket->arts0->currencies->convertcurrency($c, $c_def, $price);			
+											$price = $basket->arts0->currencies->convertcurrency($c, $c_def, $price);
 										echo $price . ' ' . $c_def;
 										$total_price += $price;
 									} else {
 										$price = round(($size[0] * $size[1])/100000 * $basket->site_price, 2);
 										if ($c_def != $c)
-											$price = $basket->arts0->currencies->convertcurrency($c, $c_def, $price);			
+											$price = $basket->arts0->currencies->convertcurrency($c, $c_def, $price);
 										echo $price . ' ' . $c_def;
 										$total_price += $price;
 									}
@@ -133,28 +133,28 @@ $c_def = Yii::app()->cookie->getCurrency();
 											if ($c_def != $c)
 												$discount = $basket->arts0->currencies->convertcurrency($c, $c_def, $discount);
 										}
-									} else 
+									} else
 										$discount = 0;
-								} 
+								}
 							?>
 							</span>
 						</li>
 					</ul>
 				</div><!-- profile block -->
 				<?php endforeach;?>
-				<?php 
+				<?php
 					if(!$basket_baghet)
-						echo '<div class="profile-block">'. 
-							 '	<ul class="order-info">'. 
+						echo '<div class="profile-block">'.
+							 '	<ul class="order-info">'.
 							 '		<li>'.
 							 '			<span class="order-field-title">'. Yii::t('content','Baguette art') .'</span>'.
 							 '			<span class="colorRed selectFor">'. CHtml::link(Yii::t('content','Select'),array('arts/selectBaguette', 'artId'=>$artId), array('class'=>'colorRed ')) .'</span>'.
 							 '		</li>'.
 							 '	</ul>'.
 							 '</div>';
-					
-					
-					
+
+
+
 					if(!$basket_glass)
 						echo '<div class="profile-block">'.
 						'	<ul class="order-info">'.
@@ -173,7 +173,7 @@ $c_def = Yii::app()->cookie->getCurrency();
 						'		</li>'.
 						'	</ul>'.
 						'</div>';
-						
+
 				?>
 				<div class="profile-block clear">
 					<h2 class="title">Услуга</h2>
@@ -196,7 +196,7 @@ $c_def = Yii::app()->cookie->getCurrency();
 							<?php if (!Yii::app()->user->isGuest):?>
 							<span class="order-field-name"><?php echo Yii::t('content','Delivery address');?>: </span>
 							<span class="order-field-value colorRed">
-							<?php 
+							<?php
 								//$d = DeliveryAddress::model()->findAllByAttributes(array('user'=>));
 							?>
 							</span><br/>

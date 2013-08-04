@@ -19,4 +19,5 @@ if (!empty($env)) {
 if (!file_exists($configFile)) {
   die("Config file '$configFile' is not found.");
 }
+defined('APP_ENV') || define('APP_ENV','production');
 define('APP_CFG',$configFile);

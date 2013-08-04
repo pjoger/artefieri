@@ -26,8 +26,8 @@
 	<div id="header" class="wrapper">
 	    <div id="header-right">
 	    	<div id="kontakt">
-	        	<span><?php echo Yii::t('general', 'Phone');?>: +7 495 555 44 33<br/>
-	            <?php echo CHtml::link(Yii::t('general', 'e-Mail').': mail@artefieri.com','mail@artefieri.com'); ?></span>
+	        	<span><?php /*echo Yii::t('general', 'Phone');?>: +7 495 555 44 33<br/>
+	            <?php */ echo CHtml::link(Yii::t('general', 'e-Mail').': mail@artefieri.com','mail@artefieri.com'); ?></span>
 	        </div> <!-- end kontakt -->
 <?php /* ?>
 <!-- 	        <div id="menusearch"> -->

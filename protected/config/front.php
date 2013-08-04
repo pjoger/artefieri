@@ -3,6 +3,7 @@
 defined('APP_CFG') || define('APP_CFG',dirname(__FILE__).'/main.php');
 
 return CMap::mergeArray(
+    require(dirname(__FILE__).DIRECTORY_SEPARATOR.'web_and_cmd.php'),
     require(APP_CFG),
     array(
         // Put front-end settings there

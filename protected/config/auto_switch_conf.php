@@ -12,6 +12,7 @@ if (is_file($envFile)) {
 $configFile = $rootPath . '/protected/config/production.php';
 if (!empty($env)) {
   $configFile = $rootPath . '/protected/config/' . $env . '.php';
+  define('APP_ENV',$env);
   define('YII_DEBUG', true);
   define('YII_TRACE_LEVEL', 3);
 }

@@ -129,6 +129,7 @@ return array(
 		'location' => array(
 			'class' => 'application.components.Location',
 		),
+/*
 		'image'=>array(
 				'class'=>'application.extensions.image.CImageComponent',
 				// GD or ImageMagick
@@ -137,6 +138,16 @@ return array(
 				//'params'=>array('directory'=>'/opt/local/bin'),
 				'params'=>array('directory'=>'/usr/bin'),
 		),
+    'artefieri' => array(
+      'class' => 'application.extensions.artefieri.CArtefieriComponent',
+      'coverSizes' => array(
+        array(320,240),
+        array(600,null),
+        array(null,90),
+      ),
+    ),
+ *
+ */
 	),
 
 	// application-level parameters that can be accessed
@@ -145,10 +156,7 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'enderr@mad.scientist.com',
    	'filtre' => '{"cat":"0", "limit":"1"}',
-    'coverSize' => array(
-      array(360,240),
-      array(600,null),
-    ),
+    'coverPath' => 'images/covers',
 	),
 
 	'behaviors'=>array(

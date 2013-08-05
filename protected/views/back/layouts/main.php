@@ -15,10 +15,12 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/stil.css" />
-	
+
 <!-- 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.min.js"></script>  -->
 <!--    <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/common.js"></script>  -->
-	
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon_<?php echo (defined('APP_ENV') && APP_ENV != 'production') ? 'dev' : 'adm'; ?>.ico"/>
+
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
@@ -42,7 +44,7 @@
 				array('label'=>'News', 'url'=>array('/news/admin'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Logs', 'url'=>array('/eventsLog/admin'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Translates', 'url'=>array('/site/translates'), 'visible'=>!Yii::app()->user->isGuest), 
+				array('label'=>'Translates', 'url'=>array('/site/translates'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Menus', 'url'=>array('/menus/admin'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Currency rates', 'url'=>array('/currency/Updateconversionrate'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),

@@ -1,0 +1,11 @@
+User-Agent:  *
+Disallow: # то же, что и Allow: /
+#Clean-param: f /index.php/arts/index
+Disallow:    /index.php/arts/index?type=*
+Allow:       /index.php/arts/index?type=cat&*
+Allow:       /index.php/arts/index?type=limit&*
+Disallow:    /backend*
+Disallow:    /index.php/deliveryInfo/viewCart*
+Disallow:    /index.php/users/register*
+Disallow:    /index.php/site/feedback*
+

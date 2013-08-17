@@ -116,7 +116,7 @@ class BasketController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
-	
+
 	public function actionDeleteFrom() {
 		$id = $_POST['id'];
 		$basket = Basket::model()->findByPk($id);
@@ -174,7 +174,7 @@ class BasketController extends Controller
 			Yii::app()->end();
 		}
 	}
-	
+
 	public function actionAddToBasket()
 	{
 		$artId = $_GET['artid'];
@@ -182,36 +182,38 @@ class BasketController extends Controller
 
 		$art = Arts::model()->findByPk($artId);
 		if ($art->isExclusive()){
-			$this->removeExclusives(); 
+			$this->removeExclusives();
 		}
-		
+
 		$model->user = Yii::app()->user->id;
 		$model->art = $artId;
 		if($model->save())
 		{
+/* Пока все будет без выбора багета
 			if ($art->needBaguette())
 				$this->redirect(array('arts/selectBaguette','artId'=>$artId));
 			else
-				$this->redirect(array('basket/admin'));
+ */
+				$this->redirect(array('deliveryInfo/viewCart'));
 		}
-		
+
 	}
-	
+
 	public function actionAddBaghets()
 	{
 		$artId = $_POST['artId'];
 		$baghet = $_POST['baghet'];
 		$complementTo = Basket::model()->findByAttributes(array('sid'=>Yii::app()->cookie->getSID(), 'art'=>$artId))->id;
-		
+
 		$basket = Basket::model()->findByPk($complementTo);
 		$art = Arts::model()->findByPk($basket->art);
 		if($baghet['SizeWidth'] != $art->size_x || $baghet['SizeHeight'] != $art->size_y){
 			$basket->tag1 = $baghet['SizeWidth'] . ' x ' . $baghet['SizeHeight'];
 			$basket->save();
 		}
-		
+
 		Basket::model()->deleteAllByAttributes(array('complement_to'=>$complementTo));
-		
+
 		if (isset($baghet['art_id'])){
 			$basket = new Basket();
 			$basket->art = $baghet['art_id'];
@@ -219,10 +221,10 @@ class BasketController extends Controller
 			$basket->complement_to = $complementTo;
 			$basket->tag1 = $baghet['SizeWidth'] . ' x ' . $baghet['SizeHeight'];
 			if ($basket->save()){
-				
+
 			}
 		}
-		
+
 		if (isset($baghet['glass_id'])){
 			$basket = new Basket();
 			$basket->art = $baghet['glass_id'];
@@ -230,10 +232,10 @@ class BasketController extends Controller
 			$basket->complement_to = $complementTo;
 			$basket->tag1 = $baghet['SizeWidth'] . ' x ' . $baghet['SizeHeight'];
 			if ($basket->save()){
-				
+
 			}
 		}
-		
+
 		if (isset($baghet['paspartu_id'])){
 			$basket = new Basket();
 			$basket->art = $baghet['paspartu_id'];
@@ -241,14 +243,14 @@ class BasketController extends Controller
 			$basket->complement_to = $complementTo;
 			$basket->tag1 = $baghet['SizeWidth'] . ' x ' . $baghet['SizeHeight'];
 			if ($basket->save()){
-				
+
 			}
 		}
-		
+
 		$this->redirect(array('deliveryInfo/viewCart'));
-		
+
 	}
-	
+
 	public function removeExclusives(){
 		$user = Yii::app()->user->id;
 		$sid  = Yii::app()->cookie->getSID();
@@ -258,7 +260,7 @@ class BasketController extends Controller
 				$basket->delete();
 			}
 		}
-		
+
 	}
 
 	public function actionStatusUpdate(){
@@ -270,7 +272,7 @@ class BasketController extends Controller
 
 		$basket_id = $_POST['art'];
 		$person_id = $_POST['person'];
-		
+
 		$links = Ownership::model()->getByArtNPerson($art_id, $person_id);
 		if(is_array($links)){
 			foreach ($links as $link) {
@@ -279,7 +281,7 @@ class BasketController extends Controller
 		} else {
 			$links->delete;
 		}
-			
+
 	}
-	
+
 }

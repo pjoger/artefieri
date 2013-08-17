@@ -91,7 +91,6 @@ class ArtsController extends Controller
 				Yii::app()->params['filtre'] = json_encode($_filters);
 			}
 		}
-
 		$limit = 1;
 		//$cat = 0;
 		$criteria = new CDbCriteria();

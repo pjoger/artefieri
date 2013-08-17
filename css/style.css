@@ -94,15 +94,16 @@ body,td,th,a:link,a:visited {
 	color: #494033;
 }
 
+html, body {
+	height: 100%;
+	border: 0;
+  padding: 0;
+  margin: 0;
+}
 body {
 	background-color: #FFF;
-	/*font-family: simplex, serif;*/
-	/*font-family: 'Nobile', sans-serif;*/
-	/*font-family: 'Roboto', sans-serif;*/
 	font-family: 'Source Code Pro', sans-serif;
-	font-size: 10px;
-	min-height: 100%;
-	border: 0;
+	font-size: 14px;
 	outline: 0;
 	display: block;
 	vertical-align: text-bottom;
@@ -301,7 +302,7 @@ div#secondmenu ul.menu li:last-child {
 li.menu-title ul {
 	padding: 7px;
 	background-color: rgba(255, 255, 255, 0.85) !important;
-	border: 4px solid rgba(235, 76, 35, 0.5);
+	border: 1px solid rgba(235, 76, 35, 0.5);
 	margin-top: -1px !important;
 }
 
@@ -430,21 +431,22 @@ div#settings div.submenu ul.menu li.item {
 	width: 700px;
 	height: 100%;
 /*	z-index: 1; */
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity=50);
-	opacity:.5;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	filter: alpha(opacity=30);
+	opacity:.3;
 	display: none;
+  background: center center no-repeat;
 }
 
 .categories ul.category-list {
 	display: block;
-	font-size: 34px;
+	font-size: 30px;
 	margin-left: auto;
 	margin-right: auto;
 	opacity: 1;
 	width: 100%;
 	text-align: center;
-	padding-top: 130px;
+	padding-top: 210px;
 	position: relative;
 	z-index: 1;
 }
@@ -862,6 +864,7 @@ div.inner-title h2,div.inner-title h1,div.inner-title a {
 	margin: auto 0 auto 20px;
 	padding: 0;
 	color: #ec4c23;
+  font-size: 13px;
 }
 
 div.kabinet {

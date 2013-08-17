@@ -47,11 +47,11 @@ ul.yiiPager li.previous a,ul.yiiPager li.next a {
 }
 
 ul.yiiPager li.previous {
-	background: url(../assets/pred.png) no-repeat bottom left;
+	background: url(../img/pred.png) no-repeat bottom left;
 }
 
 ul.yiiPager li.next {
-	background: url(../assets/next.png) no-repeat bottom right;
+	background: url(../img/next.png) no-repeat bottom right;
 }
 
 ul.yiiPager li.page {
@@ -92,4 +92,3 @@ ul.yiiPager .last
 {
 	display:none;
 }*/
-.

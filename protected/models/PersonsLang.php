@@ -66,6 +66,7 @@ class PersonsLang extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+//      'langs' => array(self::BELONGS_TO,'Lang','id'),
 		);
 	}
 
@@ -112,15 +113,15 @@ class PersonsLang extends CActiveRecord
 	}
 
 	public function getByPersonId($personId) {
-	
+
 		$criteria = new CDbCriteria();
 		$criteria->condition = 'person = :person_id';
 		$criteria->params = array(':person_id' => $personId);
 		$translates = PersonsLang::model()->findAll($criteria);
-	
+
 		return $translates;
 	}
-	
+
 	public function getByPersonNLang($personid, $langid){
 		$criteria = new CDbCriteria();
 		$criteria->condition = '(person = :person_id) and (lang=:lang_id)';
@@ -128,16 +129,16 @@ class PersonsLang extends CActiveRecord
 		$result = PersonsLang::model()->find($criteria);
 		return $result;
 	}
-	
+
 	public function beforeSave()
 	{
 		if (parent::beforeSave())
 		{
-			$this->s_full_name = $this->s_first_name . ' ' . $this->s_middle_name . ' ' . $this->s_last_name; 
+			$this->s_full_name = $this->s_first_name . ' ' . $this->s_middle_name . ' ' . $this->s_last_name;
 			$this->text_descr_html = Yii::app()->decoda->parse($this->text_descr_source);
 			return true;
 		}
 	}
-	
-	
+
+
 }

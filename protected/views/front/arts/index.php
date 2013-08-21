@@ -39,9 +39,11 @@ $this->renderPartial('menu/list');//, array('cat'=>isset($cat)?$cat:0,'limit'=>i
                         	<div class="product-item-title floatleft">
                             	<h3 class="title">"<?php echo CHtml::link('<span>'.$product->_display_name.'</span>',array('arts/view','id'=>$product->id),array("class"=>"info")); ?>"</h3>
                             </div> <!-- product title -->
+<?php /*
                             <div class="product-item-info floatright">
                             	<?php echo CHtml::link('<span>i</span>',array('arts/view','id'=>$product->id),array("class"=>"info")); ?>
                             </div><!-- product info -->
+*/ ?>
                             <div class="product-item-price floatright">
                             	<h3 class="price"><?php
                             		//echo $product->site_price;

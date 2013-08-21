@@ -127,7 +127,7 @@
 					'htmlOptions'=>array('class'=>'menu'),
 						'items'=>array(
 							array('label'=>Yii::t('menu', 'Home'), 'url'=>array('/site/index'),'itemOptions'=>array('class'=>'item')),
-							array('label'=>Yii::t('menu', 'Gallery'), 'url'=>array('/arts/index?type=limit&value=10'),'itemOptions'=>array('class'=>'item')),
+							array('label'=>Yii::t('menu', 'Gallery'), 'url'=>array('/arts/index'),'itemOptions'=>array('class'=>'item')),
 							array('label'=>Yii::t('menu', 'Authors'), 'url'=>array('/persons/index'),'itemOptions'=>array('class'=>'item')),
 							array('label'=>Yii::t('menu', 'Events'), 'url'=>array('/news/index'),'itemOptions'=>array('class'=>'item')),
 						),

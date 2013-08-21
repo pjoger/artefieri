@@ -7,7 +7,7 @@ class PersonsController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2FiltersAlfa';
-	
+
 	/**
 	 * @return array action filters
 	 */
@@ -54,7 +54,7 @@ class PersonsController extends Controller
 	public function actionIndex($type = '', $value = '', $f = '')
 	{
 		$_filters = array();
-		
+
 		if(isset($_GET))
 		{
 			$f = isset($f) ? urldecode($f) : '';
@@ -67,9 +67,25 @@ class PersonsController extends Controller
 				Yii::app()->params['filtre'] = json_encode($_filters);
 			}
 		}
-		
+
 		$limit = 20;
-		$criteria = new CDbCriteria();
+		$criteria = new CDbCriteria(
+      array(
+        'with' => array(
+          'arts'=>array(
+            'select' => false,
+            'joinType'=>'INNER JOIN',
+            'condition' => 'arts_arts.relation=1',
+            'together' => true,
+           ),
+/*          'langs' => array(
+            'on' => 'langs.lang_2=:lang',
+            'params' => array(':lang'=> Yii::app()->language),
+            'together' => true,
+          ),*/
+         )
+      )
+    );
 
 		if(count($_filters) > 0){
 			foreach ($_filters as $key=>$filter)
@@ -87,19 +103,19 @@ class PersonsController extends Controller
 				}
 			}
 		}
-		$criteria->distinct = true;		
-		
+		$criteria->distinct = true;
+
 		$count = Persons::model()->count($criteria);
 		$pages = new MyPagination($count);
 		$pages->pageSize = $limit;
 		$pages->applyLimit($criteria);
 		$persons  = Persons::model()->findAll($criteria);
-		
+
 		$dataProvider=new CActiveDataProvider('Persons',array(
                 'criteria'=>$criteria,
                 'pagination'=>$pages,
             ));
-		
+
 		$this->render('index', array(
 				"dataProvider" => $dataProvider,
 				"model" => $persons,
@@ -126,10 +142,10 @@ class PersonsController extends Controller
 		if (isset($_POST['alfa']) && !empty($_POST['alfa'])){
 			$alfa = $_POST['alfa'];
 			$data = Persons::model()->getPersonsByAlfa($alfa);
-			
+
 			$items = array();
 			$_filters = json_decode(Yii::app()->params['filtre'], true);
-				
+
 			foreach ($data as $person)
 			{
 				$v = isset($_filters['author'])&&($_filters['author']==$person->id)? ' filter-active' : '';
@@ -141,12 +157,12 @@ class PersonsController extends Controller
 						'linkOptions'=>array('title'=>$person->_display_full_name),
 				);
 			}
-			
+
 			$this->renderPartial('menu/filterPersons', array('items'=>$items));
-			
+
 		}
-		
+
 	}
-	
-	
+
+
 }

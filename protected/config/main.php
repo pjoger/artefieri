@@ -155,7 +155,7 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'enderr@mad.scientist.com',
-   	'filtre' => '{"cat":"0", "limit":"1"}',
+   	'filtre' => '{"cat":"0", "limit":"10"}',
     'coverPath' => 'images/covers',
 	),
 

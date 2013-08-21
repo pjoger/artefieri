@@ -37,7 +37,7 @@ class Persons extends CActiveRecord
 	public $_display_full_name = '';
 	public $_display_text_source = '';
 	public $_display_text_html = '';
-	
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -87,7 +87,16 @@ class Persons extends CActiveRecord
 		return array(
 			'users' => array(self::MANY_MANY, 'Users', 'copyrights(person, user)'),
 			'arts' => array(self::MANY_MANY, 'Arts', 'ownership(person, art)'),
-			'langs' => array(self::MANY_MANY, 'Lang', 'persons_lang(person, lang)'),
+/*			'langs' => array(self::HAS_MANY, 'PersonsLang', 'person',
+        'with' => array(
+
+        ),
+      ),*/
+			'langs' => array(self::MANY_MANY, 'Lang', 'persons_lang(person, lang)',
+/*        'with' => array(
+
+        ),*/
+      ),
 		);
 	}
 
@@ -153,7 +162,7 @@ class Persons extends CActiveRecord
 			)
 		));
 	}
-	
+
 	public function beforeSave()
 	{
 		if (parent::beforeSave())
@@ -170,10 +179,10 @@ class Persons extends CActiveRecord
 					$this->s_www = 'http://'. $this->s_www;
 				}
 			}
-			$this->s_full_name = $this->s_first_name . ' ' . $this->s_middle_name . ' ' . $this->s_last_name; 
+			$this->s_full_name = $this->s_first_name . ' ' . $this->s_middle_name . ' ' . $this->s_last_name;
 			$this->birth = date('Y-m-d', strtotime($this->birth));
 			$this->text_descr_html = Yii::app()->decoda->parse($this->text_descr_source);
-			
+
 			return true;
 		}
 	}
@@ -190,11 +199,11 @@ class Persons extends CActiveRecord
 // 		$event->eve_group = 1;
 		$event->ip = Yii::app()->cookie->getIP();
 		$event->save();
-		
+
 		parent::afterSave();
-		
+
 	}
-	
+
 	/**
 	 * Suggests a list of existing values matching the specified keyword.
 	 * @param string the keyword to be matched
@@ -220,12 +229,12 @@ class Persons extends CActiveRecord
 		}
 		return $suggest;
 	}
-	
+
 	protected function afterFind()
 	{
 		$date = date('Y-m-d', strtotime($this->birth));
 		$this->birth = $date;
-	
+
 		$file_name = str_pad($this->id,8,"0",STR_PAD_LEFT).'.'.$this->photo;
 		$thumb_name =  str_pad($this->id,8,"0",STR_PAD_LEFT).'_thumb.'.$this->photo;
 		$splited = str_split($file_name, 2);
@@ -236,12 +245,12 @@ class Persons extends CActiveRecord
 			$this->_thumb_file = Yii::app()->baseUrl.'/images/persons/'.$file_path.$thumb_name;
 		elseif (file_exists(Yii::app()->basePath.'/../images/persons/'.$file_path.$file_name))
 			$this->_thumb_file = $this->createThumbnail($file_name, $thumb_name, $file_path);
-		
+
 		$lang = Yii::app()->cookie->getLanguage();
 		$lang_id = Lang::model()->findByAttributes(array('lang_2'=>$lang))->id;
-		
+
 		$pers_lang = PersonsLang::model()->findByAttributes(array('person'=>$this->id, 'lang'=>$lang_id));
-		
+
 		if ($pers_lang){
 			$this->_display_first_name  = $pers_lang->s_first_name !='' ? $pers_lang->s_first_name : $this->s_first_name;
 			$this->_display_middle_name = $pers_lang->s_middle_name !='' ? $pers_lang->s_middle_name : $this->s_middle_name;
@@ -257,10 +266,10 @@ class Persons extends CActiveRecord
 			$this->_display_text_source = $this->text_descr_source;
 			$this->_display_text_html   = $this->text_descr_html;
 		}
-	
+
 		parent::afterFind();
 	}
-	
+
 	protected function createThumbnail($image_file, $thumb_file, $file_path)
 	{
 		Yii::import('application.extensions.image.Image');
@@ -274,9 +283,9 @@ class Persons extends CActiveRecord
 	{
 		$model = Persons::model()->findAll();
 		$items = array();
-	
+
 		$_filters = json_decode(Yii::app()->params['filtre'], true);
-			
+
 		foreach ($model as $person)
 		{
 			$v = isset($_filters['author'])&&($_filters['author']==$person->id)? ' filter-active' : '';
@@ -285,13 +294,13 @@ class Persons extends CActiveRecord
 					'url'=>array('arts/index','type'=>'author','value'=>$person->id, 'f' => urlencode(Yii::app()->params['filtre'])),
 					'active'=>$v!='',
 					'itemOptions'=>array('class'=>"item$v"),
-					'linkOptions'=>array('title'=>$person->_display_full_name),	
+					'linkOptions'=>array('title'=>$person->_display_full_name),
 			);
 		}
-	
+
 		return $items;
 	}
-	
+
 	public function getPersonsByAlfa($alfa)
 	{
 		$criteria = new CDbCriteria();
@@ -302,5 +311,5 @@ class Persons extends CActiveRecord
 		$results = Persons::model()->findAll($criteria);
 		return $results;
 	}
-	
+
 }

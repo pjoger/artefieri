@@ -66,7 +66,7 @@ class CArtefieriComponent extends CApplicationComponent
     }
 
     if (!is_dir($file_info['filepath'])) {
-      mkdir($file_info['filepath'],0,true);
+      mkdir($file_info['filepath'],0755,true);
     }
     if (file_exists($file_info['fullname'])) {
       array_map('unlink', glob($file_info['filepath'].'/'.$file_info['name'].'*'));

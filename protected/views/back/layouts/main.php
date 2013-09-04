@@ -19,7 +19,7 @@
 <!-- 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.min.js"></script>  -->
 <!--    <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/common.js"></script>  -->
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon_<?php echo (defined('APP_ENV') && APP_ENV != 'production') ? 'dev' : 'adm'; ?>.ico"/>
+  <link rel="icon" type="image/x-icon" href="/favicon_<?php echo (defined('APP_ENV') && APP_ENV != 'production') ? 'dev' : 'adm'; ?>.ico"/>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>

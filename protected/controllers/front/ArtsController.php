@@ -92,6 +92,7 @@ class ArtsController extends Controller
 			}
 		}
 		$limit = 10;
+    $sold_condition = 1;
 		//$cat = 0;
 		$criteria = new CDbCriteria();
 		if(count($_filters) > 0){
@@ -163,12 +164,18 @@ class ArtsController extends Controller
 								break;
 						}
 						break;
+          case 'sold':
+            $sold_condition = $filter;
+            break;
 					case 'color':
 						// ???
 						break;
 				}
 			}
 		}
+    if ($sold_condition < 2){
+      $criteria->addCondition('`t`.`amount` '.($sold_condition > 0 ? '>0' : '=0'));
+    }
 		$criteria->join .= 'INNER JOIN `super_art_types_to_types` ON `t`.`type` = `super_art_types_to_types`.`sub`';
 		$criteria->distinct = true;
 

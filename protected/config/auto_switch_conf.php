@@ -20,4 +20,6 @@ if (!file_exists($configFile)) {
   die("Config file '$configFile' is not found.");
 }
 defined('APP_ENV') || define('APP_ENV','production');
+defined('APP_isDevelComp') || define('APP_isDevelComp',APP_ENV != 'production');
+defined('APP_COVERURL') || define('APP_COVERURL',APP_isDevelComp ? 'http://artefieri.ru' : '');
 define('APP_CFG',$configFile);

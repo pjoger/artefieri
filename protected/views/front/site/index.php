@@ -12,7 +12,8 @@ $this->pageTitle=Yii::app()->name;
 				<?php echo CHtml::link('<span>'. $category->s_title .'</span>',
 							array(
 								"arts/index",
-								"cat"=>$category->id
+                "type" => "cat",
+								"value"=>$category->id
 							),
 							array(
 								//"mousehover" => "alert('hello')",

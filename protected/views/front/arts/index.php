@@ -28,7 +28,7 @@ $this->renderPartial('menu/list');//, array('cat'=>isset($cat)?$cat:0,'limit'=>i
                         	<a href="#" title="<?php echo $product->_display_name; ?>">
                         	<?php
                         		echo  CHtml::link(
-										CHtml::image($product->_thumb_file,
+										CHtml::image($product->_covers['320x240'],
                         					$product->_display_name,
                         					array("class" => "clickme", "title" => $product->_display_name))
 										,array('arts/view','id'=>$product->id),array("class"=>"info"));

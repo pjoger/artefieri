@@ -312,7 +312,7 @@ class Arts extends CActiveRecord
       $this->_thumb_file = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name.'_320x240.jpg';
       foreach (Yii::app()->artefieri->coverSizes as $s){
         list($w,$h) = $s;
-        $this->_covers[$w.'x'.$h] = Yii::app()->baseUrl.'/images/covers/'.$file_path.$file_name.'_'.$w.'x'.$h.'.jpg';
+        $this->_covers[$w.'x'.$h] = APP_COVERURL.'/images/covers/'.$file_path.$file_name.'_'.$w.'x'.$h.'.jpg';
       }
     }
 
@@ -473,7 +473,8 @@ class Arts extends CActiveRecord
           'select' => 't.id, t.cover, t.cover_w, t.cover_h',
           'join' => 'JOIN `super_art_types_to_types` ON `t`.`type` = `super_art_types_to_types`.`sub`',
           'condition' => 'super_art_types_to_types.super = :superID'
-                        .' AND t.cover IS NOT NULL AND t.cover_w > 0 AND t.options & 1',
+                        .' AND t.cover IS NOT NULL AND t.cover_w > 0'
+                        .' AND t.options & 1 AND t.amount>0',
           'order' => 't.id DESC',
           'limit' => '1',
           'params' => array(':superID' => $super)

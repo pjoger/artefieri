@@ -94,7 +94,7 @@ class ArtsController extends Controller
 		$limit = 10;
     $sold_condition = 1;
 		//$cat = 0;
-		$criteria = new CDbCriteria();
+		$criteria = new CDbCriteria(array('condition' => 't.options & 1'));
 		if(count($_filters) > 0){
 			foreach ($_filters as $key=>$filter)
 			{

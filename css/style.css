@@ -393,8 +393,8 @@ div#settings div.submenu ul.menu li.item {
 #content {
 	display: block;
 	margin-top: 2px;
-	margin-bottom: 10px;
-	/*min-height: 600px;*/
+	/*margin-bottom: 10px;
+	min-height: 600px;*/
 	width: 100%;
 	float: left;
 }
@@ -412,16 +412,19 @@ div#settings div.submenu ul.menu li.item {
 
 
 .categories{
-	position: relative;
-/*  z-index: 1; */
+/*	position: relative;
+  z-index: 1; */
 }
 
-/*
+
 .categories-container{
-	position: relative;
-	z-index: 1;
+	position: absolute;
+  width: 990px;
+  height: 600px;
+	top: 50%;
+  margin-top: -180px;
 }
-*/
+
 
 .categories-background{
 	position: absolute;
@@ -507,7 +510,7 @@ ul.category-list li.category-item span:hover {
 
 /* INNER TOP CONTENT */
 div#inner-top {
-	width: 650px;
+	width: 630px;
 	float: left;
 	border-bottom: 1px solid #ec4c22;
 }
@@ -623,7 +626,7 @@ div.inner-top-submenu ul.sizes li.item {
 div#inner-right {
 	float: right;
 	position: relative;
-	left: 30px;
+	left: 10px;
 	top: 10px;
 }
 

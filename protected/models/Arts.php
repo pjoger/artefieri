@@ -475,7 +475,8 @@ class Arts extends CActiveRecord
           'condition' => 'super_art_types_to_types.super = :superID'
                         .' AND t.cover IS NOT NULL AND t.cover_w > 0'
                         .' AND t.options & 1 AND t.amount>0',
-          'order' => 't.id DESC',
+          //'order' => 't.id DESC',
+          'order' => 'RAND()',
           'limit' => '1',
           'params' => array(':superID' => $super)
       ));

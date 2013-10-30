@@ -212,6 +212,7 @@
 		            </div>
 				</div>
 	        </div><!-- inner top -->
+          <div class="clear"/>
 	    </div>
 		<?php echo $content; ?>
 	</div><!-- content -->

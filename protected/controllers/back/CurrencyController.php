@@ -180,7 +180,7 @@ class CurrencyController extends Controller
 			//get currency Code
  			$currency = $row->currency_code;
 			//convert it with respect to one usd
-  			$conversion = $cc->convert('USD',$currency,1, ECurrencyHelper::USE_GOOGLE);
+  			$conversion = $cc->convert('USD',$currency,1, ECurrencyHelper::USE_YAHOO);
   			//update this row
 			CurrencyEx::model()->updateByPk($row->id, array('conversion_rate' =>$conversion));
 		}

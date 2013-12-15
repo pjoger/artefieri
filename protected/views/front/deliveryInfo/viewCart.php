@@ -31,17 +31,21 @@ $c_def = Yii::app()->cookie->getCurrency();
 				$basket_baghet = false;
 				$basket_glass = false;
 				$basket_paspartu = false;
+        $need_baguette = false;
 
 				foreach ($baskets as $basket):
 
 					if ($basket->complement_to !== null){
 						switch($basket->arts0->types->id){
-							case 4: $basket_baghet = true; break;
-							case 6: $basket_glass = true; break;
-							case 5: $basket_paspartu = true; break;
+              case 4: $need_baguette |= $basket_baghet = true; break;
+              case 6: $need_baguette |= $basket_glass = true; break;
+              case 5: $need_baguette |= $basket_paspartu = true; break;
 						}
 					} else {
 						$artId = $basket->art;
+            if ($basket->arts0->types->need_baguette == 1){
+              $need_baguette = true;
+            }
 					}
 
 			?>
@@ -143,37 +147,38 @@ $c_def = Yii::app()->cookie->getCurrency();
 				</div><!-- profile block -->
 				<?php endforeach;?>
 				<?php
-					if(!$basket_baghet)
-						echo '<div class="profile-block">'.
-							 '	<ul class="order-info">'.
-							 '		<li>'.
-							 '			<span class="order-field-title">'. Yii::t('content','Baguette art') .'</span>'.
-							 '			<span class="colorRed selectFor">'. CHtml::link(Yii::t('content','Select'),array('arts/selectBaguette', 'artId'=>$artId), array('class'=>'colorRed ')) .'</span>'.
-							 '		</li>'.
-							 '	</ul>'.
-							 '</div>';
+          if ($need_baguette){
+            if(!$basket_baghet)
+              echo '<div class="profile-block">'.
+                 '	<ul class="order-info">'.
+                 '		<li>'.
+                 '			<span class="order-field-title">'. Yii::t('content','Baguette art') .'</span>'.
+                 '			<span class="colorRed selectFor">'. CHtml::link(Yii::t('content','Select'),array('arts/selectBaguette', 'artId'=>$artId), array('class'=>'colorRed ')) .'</span>'.
+                 '		</li>'.
+                 '	</ul>'.
+                 '</div>';
 
 
 
-					if(!$basket_glass)
-						echo '<div class="profile-block">'.
-						'	<ul class="order-info">'.
-						'		<li>'.
-						'			<span class="order-field-title">'. Yii::t('content','Protective glass') .'</span>'.
-						'			<span class="colorRed selectFor">'. CHtml::link(Yii::t('content','Select'),array('arts/selectBaguette', 'artId'=>$artId), array('class'=>'colorRed ')) .'</span>'.
-						'		</li>'.
-						'	</ul>'.
-						'</div>';
-					if(!$basket_paspartu)
-						echo '<div class="profile-block">'.
-						'	<ul class="order-info">'.
-						'		<li>'.
-						'			<span class="order-field-title">'. Yii::t('content','Passepartout') .'</span>'.
-						'			<span class="colorRed selectFor">'. CHtml::link(Yii::t('content','Select'),array('arts/selectBaguette', 'artId'=>$artId), array('class'=>'colorRed ')) .'</span>'.
-						'		</li>'.
-						'	</ul>'.
-						'</div>';
-
+            if(!$basket_glass)
+              echo '<div class="profile-block">'.
+              '	<ul class="order-info">'.
+              '		<li>'.
+              '			<span class="order-field-title">'. Yii::t('content','Protective glass') .'</span>'.
+              '			<span class="colorRed selectFor">'. CHtml::link(Yii::t('content','Select'),array('arts/selectBaguette', 'artId'=>$artId), array('class'=>'colorRed ')) .'</span>'.
+              '		</li>'.
+              '	</ul>'.
+              '</div>';
+            if(!$basket_paspartu)
+              echo '<div class="profile-block">'.
+              '	<ul class="order-info">'.
+              '		<li>'.
+              '			<span class="order-field-title">'. Yii::t('content','Passepartout') .'</span>'.
+              '			<span class="colorRed selectFor">'. CHtml::link(Yii::t('content','Select'),array('arts/selectBaguette', 'artId'=>$artId), array('class'=>'colorRed ')) .'</span>'.
+              '		</li>'.
+              '	</ul>'.
+              '</div>';
+          }
 				?>
 				<div class="profile-block clear">
 					<h2 class="title">Услуга</h2>

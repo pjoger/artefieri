@@ -94,7 +94,7 @@ class ArtsController extends Controller
 		$limit = 10;
     $sold_condition = 1;
 		//$cat = 0;
-		$criteria = new CDbCriteria(array('condition' => 't.options & 1'));
+		$criteria = new CDbCriteria();
 		if(count($_filters) > 0){
 			foreach ($_filters as $key=>$filter)
 			{
@@ -173,6 +173,8 @@ class ArtsController extends Controller
 				}
 			}
 		}
+    // Только те, что в продаже
+    $criteria->addCondition(array('condition' => 't.options & 1'));
     if ($sold_condition < 2){
       $criteria->addCondition('`t`.`amount` '.($sold_condition > 0 ? '>0' : '=0'));
     }

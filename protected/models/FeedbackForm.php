@@ -39,6 +39,12 @@ class FeedbackForm extends CFormModel
 	{
 		return array(
 			'verifyCode'=>Yii::t('content','Verification Code'),
+      'first_name'=>Yii::t('content','First Name'),
+      'last_name'=>Yii::t('content','Last Name'),
+      'phone'=>Yii::t('content','Phone'),
+      'email'=>Yii::t('content','E-Mail'),
+      'subject'=>Yii::t('content','Subject'),
+      'body'=>Yii::t('content','Your message'),
 		);
 	}
 }

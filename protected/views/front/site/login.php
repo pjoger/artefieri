@@ -25,7 +25,7 @@ $this->breadcrumbs=array(
 	<p class="note"><?php echo Yii::t('general', 'Fields with'); ?> <span class="required">*</span> <?php echo Yii::t('general', 'are required.'); ?></p>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Username'); ?>
+		<?php echo $form->labelEx($model,'username'); ?>
 		<?php echo $form->textField($model,'username'); ?>
 		<?php echo $form->error($model,'username'); ?>
 	</div>

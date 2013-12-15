@@ -65,6 +65,7 @@ return array(
 	// feedback
 	'Registration data' => 'Регистрационные данные',
 	'Change registration information' => 'Изменить регистрационные данные',
+  'Subject' => 'Тема сообщения',
 	'Your message' => 'Ваше сообщение',
 	'Attach a file' => 'Прикрепить файл',
 	'Select the file' => 'Выберите файл',

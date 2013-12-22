@@ -124,12 +124,12 @@ Yii::app()->clientScript->registerMetaTag($metaKeyword, 'keywords');
                     </div><!-- product dtails -->
                     <div class="product-order">
                     	<div class="product-cart">
-                        	<div class="order-cart"><?php echo CHtml::link('<span>'. Yii::t('content', 'Buy paint now') .'</span>',array('basket/AddToBasket','artid'=>$model->id),array("class"=>"info")); ?></div>
+                        	<div class="order-cart"><?php echo CHtml::link('<span>'. Yii::t('content', 'Buy') .'</span>',array('basket/AddToBasket','artid'=>$model->id),array("class"=>"info")); ?></div>
                         </div> <!-- order cart -->
                         <div class="item-list">
                         	<ul>
                         		<li><a href="" title=""><span><?php echo Yii::t('content', 'Payment method'); ?></span></a></li>
-                        		<li><a href="" title=""><span><?php echo Yii::t('content', 'Ask a question about the picture'); ?></span></a></li>
+                        		<li><a href="" title=""><span><?php echo Yii::t('content', 'Ask a question about the goods'); ?></span></a></li>
                         		<li><a href="" title=""><span><?php echo Yii::t('content', 'Back to work list'); ?></span></a></li>
                             </ul>
                         </div><!-- links -->

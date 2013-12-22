@@ -300,7 +300,7 @@ class Arts extends CActiveRecord
 	{
 		$this->oldRecord=clone $this;
 
-		$date = date('Y-m-d', strtotime($this->produced));
+		$date = date('Y', strtotime($this->produced));
 		$this->produced = $date;
 
     if ($this->cover && $this->cover_w > 0){

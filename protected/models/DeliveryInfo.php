@@ -164,11 +164,8 @@ class DeliveryInfo extends CActiveRecord
 	
 	protected function afterFind()
 	{
-		$date = date('Y-m-d', strtotime($this->added));
-		$this->added = $date;
-	
-		$date = date('Y-m-d', strtotime($this->last_update));
-		$this->last_update = $date;
+		$this->added = date('Y-m-d', strtotime($this->added));
+		$this->last_update = date('Y-m-d', strtotime($this->last_update));
 		
 		$basket = Basket::model()->findAllByAttributes(array('delivery'=>$this->id));
 		if (count($basket) > 0)

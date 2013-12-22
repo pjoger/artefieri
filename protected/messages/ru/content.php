@@ -251,7 +251,7 @@ return array(
 	'The dominant color' => 'Доминирующие цвета',
 	'Art name A..Z'   => 'Название работы А..Я',
 	'Buy paint now'   => 'Купить картину',
-	'Ask a question about the picture' => 'Задать вопрос о картине',
+	'Ask a question about the goods' => 'Задать вопрос о товаре',
 	'Back to work list' => 'Вернутся к списку работ',
 	'Genres'          => 'Жанры',
 	'List Genres'     => 'Список всех Жанров',

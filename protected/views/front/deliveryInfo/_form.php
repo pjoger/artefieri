@@ -50,11 +50,16 @@
 		?>
 	</div>
 	
-	<div class="row">
-		<?php echo $form->labelEx($model,'address'); ?>
-		<?php echo $form->dropDownList($model, 'address', CHtml::listData(DeliveryAddress::model()->findAllByAttributes(array('user'=>Yii::app()->user->userId)), 'id', 's_address')); ?>
+		<?php
+      $user_address = DeliveryAddress::model()->findAllByAttributes(array('user'=>Yii::app()->user->userId));
+      if ($user_address){
+      	echo '<div class="row">';
+          echo $form->labelEx($model,'address');
+          echo $form->dropDownList($model, 'address', CHtml::listData($user_address, 'id', 's_address'));
+        echo '</div>';
+      }
+    ?>
 		<?php echo $form->error($model,'address'); ?>
-	</div>
 
 	<?php endif; ?>
 

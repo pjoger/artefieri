@@ -24,7 +24,7 @@
 	    <div>
 			<?php
 				$_filters = json_decode(Yii::app()->params['filtre'], true);
-				$l = isset($_filters['limit']) ? $_filters['limit'] : 100;
+				$l = isset($_filters['limit']) ? $_filters['limit'] : 10;
 			?>
 	    	<div id="inner-right">
 	        	<div class="pager-select">

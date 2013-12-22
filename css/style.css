@@ -422,7 +422,7 @@ div#settings div.submenu ul.menu li.item {
   width: 990px;
   height: 600px;
 	top: 50%;
-  margin-top: -180px;
+  margin-top: -220px;
 }
 
 
@@ -1314,7 +1314,7 @@ table.order-form td{
 .cart-user-info form .row label,.kabinet-profile form .row label {
 	width: 120px;
 	float: left;
-	font-size: 1.2em;
+	font-size: 12px;
 	text-transform: uppercase;
 	font-weight: 700;
 	padding-top: 7px;

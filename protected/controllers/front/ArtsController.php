@@ -254,9 +254,6 @@ class ArtsController extends Controller
 					$criteria->mergeWith($personsCriteria, false);
 				}
 
-				//Conditia de selectare a tipurilor de arte
-				$criteria->addCondition('t.type < 4', 'AND');
-
 				//Distinct condtition
 				$criteria->distinct = true;
 

@@ -123,10 +123,11 @@ $c_def = Yii::app()->cookie->getCurrency();
 									}
 									//$total_price += ($r->arts0->size_x + $r->arts0->size_y)*$basket->site_price;
 								} else {
-									if ($c_def != $c)
+									if ($c_def != $c){
 										$price = $basket->arts0->currencies->convertcurrency($c, $c_def, $basket->site_price);
-									else
+                  } else {
 										$price = $basket->site_price;
+                  }
 									echo $price . ' ' . $c_def;
 									$product_price += $price;
 									$d = ArtsDiscount::model()->findByAttributes(array('art'=>$basket->art));
@@ -148,7 +149,7 @@ $c_def = Yii::app()->cookie->getCurrency();
 				<?php endforeach;?>
 				<?php
           if ($need_baguette){
-            if(!$basket_baghet)
+            if(!$basket_baghet){
               echo '<div class="profile-block">'.
                  '	<ul class="order-info">'.
                  '		<li>'.
@@ -157,10 +158,11 @@ $c_def = Yii::app()->cookie->getCurrency();
                  '		</li>'.
                  '	</ul>'.
                  '</div>';
+            }
 
 
 
-            if(!$basket_glass)
+            if(!$basket_glass){
               echo '<div class="profile-block">'.
               '	<ul class="order-info">'.
               '		<li>'.
@@ -169,7 +171,8 @@ $c_def = Yii::app()->cookie->getCurrency();
               '		</li>'.
               '	</ul>'.
               '</div>';
-            if(!$basket_paspartu)
+            }
+            if(!$basket_paspartu){
               echo '<div class="profile-block">'.
               '	<ul class="order-info">'.
               '		<li>'.
@@ -178,6 +181,7 @@ $c_def = Yii::app()->cookie->getCurrency();
               '		</li>'.
               '	</ul>'.
               '</div>';
+            }
           }
 				?>
 				<div class="profile-block clear">
@@ -193,6 +197,7 @@ $c_def = Yii::app()->cookie->getCurrency();
 							<span class="order-field-name"><?php echo Yii::t('content','Price');?>: </span>
 							<span class="order-field-value colorRed"><?php echo 0 . ' ' . $c_def; ?></span>
 						</li>
+              <?php /*
 						<li>
 							<span class="order-field-name minus-red"><?php echo Yii::t('content','Delivery');?></span>
 							<span class="colorRed selectFor"><?php echo Yii::t('content','Select');?></span>
@@ -209,6 +214,7 @@ $c_def = Yii::app()->cookie->getCurrency();
 							<span class="order-field-name"><?php echo Yii::t('content','Price');?>: </span>
 							<span class="order-field-value colorRed"><?php echo 0 . ' ' . $c_def; ?></span>
 						</li>
+               */ ?>
 					</ul>
 				</div><!-- profile block -->
 				<div class="profile-block clear">

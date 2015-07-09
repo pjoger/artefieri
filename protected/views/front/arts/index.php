@@ -44,6 +44,7 @@ $this->renderPartial('menu/list');//, array('cat'=>isset($cat)?$cat:0,'limit'=>i
                             	<?php echo CHtml::link('<span>i</span>',array('arts/view','id'=>$product->id),array("class"=>"info")); ?>
                             </div><!-- product info -->
 */ ?>
+<?php /*
                             <div class="product-item-price floatright">
                             	<h3 class="price"><?php
                             		//echo $product->site_price;
@@ -58,6 +59,7 @@ $this->renderPartial('menu/list');//, array('cat'=>isset($cat)?$cat:0,'limit'=>i
                             		//echo Yii::app()->getModule('currencymanager')->convertcurrency($c,$product->site_price).' '.$c;
                             	?></h3>
                             </div><!-- product price -->
+ */?>
                         </div>
                     </div><!-- product item -->
 

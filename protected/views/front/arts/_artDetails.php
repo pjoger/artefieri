@@ -76,6 +76,7 @@ Yii::app()->clientScript->registerMetaTag($metaKeyword, 'keywords');
                         	</li>
                         	<li><span class="detail-title"><?php echo Yii::t('content', 'Produced'); ?>: </span><span class="detail-data"><?php echo $model->produced; ?></span></li>
                         	<li><span class="detail-title"><?php echo Yii::t('content', 'Size'); ?>: </span><span class="detail-data"><?php echo (isset($model->size_x)?$model->size_x/10 : '') . ' x ' .(isset($model->size_y)?$model->size_y/10:'');?></span></li>
+<?php /*
                         	<li>
                         		<span class="detail-title"><?php echo Yii::t('content', 'Price'); ?>: </span>
                         		<span class="detail-data">
@@ -91,6 +92,7 @@ Yii::app()->clientScript->registerMetaTag($metaKeyword, 'keywords');
                         		?>
                         		</span>
                         	</li>
+*/?>
                         	<li><span class="detail-title"><?php echo Yii::t('content', 'Genre'); ?>: </span>
                         	<?php
 								$s = '';

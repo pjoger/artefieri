@@ -110,6 +110,7 @@
 						?>
 	               </div> <!-- language menu -->
 	            </div> <!-- end language -->
+<?php /*
 	            <div id="currency-block">
 	            	<a href="#" title="" class="menu-title"><span onmouseover=""><?php echo Yii::t('menu', 'Currency');?></span></a>
 	                <div class="submenu">
@@ -118,6 +119,7 @@
 						?>
 					</div> <!-- language menu -->
 	            </div> <!-- end currency -->
+ */?>
 	        </div> <!-- end language and currency selector -->
 	    </div><!-- header right -->
 		<div id="header-left">

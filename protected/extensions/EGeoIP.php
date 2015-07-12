@@ -215,9 +215,18 @@ class EGeoIP extends CComponent{
 		if ( function_exists('curl_init') ) {
 		
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $host);
+      curl_setopt_array($ch, array(
+          CURLOPT_URL => $host,
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_USERAGENT => 'EGeoIP Yii Extension Class v1.0',
+          CURLOPT_CONNECTTIMEOUT => 3
+      ));
+/*
+      curl_setopt($ch, CURLOPT_URL, $host);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, 'EGeoIP Yii Extension Class v1.0');
+ * 
+ */
 			$response = curl_exec($ch);
 			curl_close ($ch);
 			
@@ -225,7 +234,14 @@ class EGeoIP extends CComponent{
 			
 			$response = file_get_contents($host, 'r');
 		}
-		
+    if (!$response){
+      return array(
+          'geoplugin_countryCode' => 'RU',
+          'geoplugin_countryName' => '',
+          'geoplugin_currencyCode' => '',
+          'geoplugin_currencyConverter' => 0
+      );
+    }
 		return unserialize($response);
 	}
 
